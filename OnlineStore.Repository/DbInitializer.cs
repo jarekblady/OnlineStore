@@ -21,7 +21,12 @@ namespace OnlineStore.Repository
 
             var products = new Product[]
             {
-            new Product{Name="Samsung S22", Description="Smartphone", Cost=3000, Brand="Samsung"},
+            new Product{Name="Samsung S21", Description="Smartphone", Cost=3000, Brand="Samsung",PictureUrl = "/images/products/Samsung.PNG"},
+            new Product{Name="Samsung S22", Description="Smartphone", Cost=3000, Brand="Samsung",PictureUrl = "/images/products/Samsung.PNG"},
+            new Product{Name="Samsung S23", Description="Smartphone", Cost=3000, Brand="Samsung",PictureUrl = "/images/products/Samsung.PNG"},
+            new Product{Name="Samsung S24", Description="Smartphone", Cost=3000, Brand="Samsung",PictureUrl = "/images/products/Samsung.PNG"},
+            new Product{Name="Samsung S25", Description="Smartphone", Cost=3000, Brand="Samsung",PictureUrl = "/images/products/Samsung.PNG"},
+            new Product{Name="Samsung S26", Description="Smartphone", Cost=3000, Brand="Samsung",PictureUrl = "/images/products/Samsung.PNG"},
 
                 };
             foreach (Product p in products)

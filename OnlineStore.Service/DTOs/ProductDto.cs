@@ -13,5 +13,6 @@ namespace OnlineStore.Service.DTOs
         public string Description { get; set; }
         public double Cost { get; set; }
         public string Brand { get; set; }
+        public string PictureUrl { get; set; }
     }
 }
