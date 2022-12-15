@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OnlineStore.Repository.Context;
 using OnlineStore.Repository.Entities;
 
@@ -17,30 +18,30 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
             _context = context;
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
 
-            return _context.Products.ToList();
+            return await _context.Products.ToListAsync();
         }
 
 
-        public Product GetByIdProduct(int id)
+        public async Task <Product> GetByIdProduct(int id)
         {
-            return _context.Products.FirstOrDefault(p => p.Id == id);
+            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public void CreateProduct(Product product)
+        public async Task CreateProduct(Product product)
         {
 
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
 
         }
 
-        public void UpdateProduct(Product product)
+        public async Task UpdateProduct(Product product)
         {
             _context.Products.Update(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
         }
         public void DeleteProduct(Product product)

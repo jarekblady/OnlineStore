@@ -9,10 +9,10 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
 {
     public interface IProductRepository
     {
-        List<Product> GetAllProducts();
-        Product GetByIdProduct(int id);
-        void CreateProduct(Product product);
-        void UpdateProduct(Product product);
+        Task <List<Product>> GetAllProducts();
+        Task <Product> GetByIdProduct(int id);
+        Task CreateProduct(Product product);
+        Task UpdateProduct(Product product);
         void DeleteProduct(Product product);
     }
 }

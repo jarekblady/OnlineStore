@@ -9,10 +9,10 @@ namespace OnlineStore.Service.Services.ProductService
 {
     public interface IProductService
     {
-        List<ProductDto> GetAllProducts();
-        ProductDto GetByIdProduct(int id);
-        void CreateProduct(ProductDto dto);
-        void UpdateProduct(ProductDto dto);
-        void DeleteProduct(int id);
+        Task <List<ProductDto>> GetAllProducts();
+        Task <ProductDto> GetByIdProduct(int id);
+        Task CreateProduct(ProductDto dto);
+        Task UpdateProduct(ProductDto dto);
+        Task DeleteProduct(int id);
     }
 }

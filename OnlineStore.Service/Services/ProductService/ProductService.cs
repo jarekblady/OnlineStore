@@ -22,36 +22,34 @@ namespace OnlineStore.Service.Services.ProductService
         }
 
 
-        public List<ProductDto> GetAllProducts()
+        public async Task<List<ProductDto>> GetAllProducts()
         {
-            var products = _productRepository.GetAllProducts();
-            var result = _mapper.Map<List<ProductDto>>(products);
-            return result;
+            var products = await _productRepository.GetAllProducts();
+            return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public ProductDto GetByIdProduct(int id)
+        public async Task<ProductDto> GetByIdProduct(int id)
         {
-            var product = _productRepository.GetByIdProduct(id);
-            var result = _mapper.Map<ProductDto>(product);
-            return result;
+            var product = await _productRepository.GetByIdProduct(id);
+            return _mapper.Map<ProductDto>(product);
         }
 
 
-        public void CreateProduct(ProductDto dto)
+        public async Task CreateProduct(ProductDto dto)
         {
             var product = _mapper.Map<Product>(dto);
-            _productRepository.CreateProduct(product);
+            await _productRepository.CreateProduct(product);
         }
 
-        public void UpdateProduct(ProductDto dto)
+        public async Task UpdateProduct(ProductDto dto)
         {
             var product = _mapper.Map<Product>(dto);
-            _productRepository.UpdateProduct(product);
+            await _productRepository.UpdateProduct(product);
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProduct(int id)
         {
-            var product = _productRepository.GetByIdProduct(id);
+            var product = await _productRepository.GetByIdProduct(id);
             _productRepository.DeleteProduct(product);
         }
     }

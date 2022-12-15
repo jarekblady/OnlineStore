@@ -16,47 +16,38 @@ namespace OnlineStore.API.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductDto>> GetAllProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetAllProducts()
         {
-
-            return Ok(_productService.GetAllProducts());
+            return Ok(await _productService.GetAllProducts());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ProductDto> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-
-            return Ok(_productService.GetByIdProduct(id));
-
+            return Ok(await _productService.GetByIdProduct(id));
         }
 
         [HttpPost]
-        public ActionResult CreateProduct(ProductDto dto)
+        public async Task<ActionResult> CreateProduct(ProductDto dto)
         {
-            _productService.CreateProduct(dto);
-
+            await _productService.CreateProduct(dto);
             return Ok("Success");
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateProduct(ProductDto dto)
+        public async Task<ActionResult> UpdateProduct(ProductDto dto)
         {
-
-            _productService.UpdateProduct(dto);
-
+            await _productService.UpdateProduct(dto);
             return Ok("Success");
         }
 
 
         [HttpDelete("{id}")]
 
-        public ActionResult DeleteProduct(int id)
+        public async Task<ActionResult> DeleteProduct(int id)
         {
-            _productService.DeleteProduct(id);
-
-
-            return NoContent();
-
+            await _productService.DeleteProduct(id);
+            return Ok("Success");
         }
 
     }
