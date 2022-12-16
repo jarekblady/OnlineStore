@@ -1,7 +1,9 @@
-import React from 'react';
-import './App.css';
-import { Container, createTheme, CssBaseline, ThemeProvider, AppBar, Toolbar, Typography } from "@mui/material";
-import Catalog from "./features/catalog/Catalog";
+import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { Route, Routes  } from "react-router";
+import ProductDetails from "./features/products/ProductDetails";
+import Products from "./features/products/Products";
+import Home from "./features/home/Home";
+import Navigation from "./Navigation";
 
 function App() {
     const theme = createTheme({
@@ -14,15 +16,13 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppBar position='static' sx={{ mb: 4 }}>
-                <Toolbar>
-                    <Typography variant='h6'>
-                        ONLINE STORE
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Navigation/>
             <Container>
-                <Catalog />
+                <Routes>
+                    <Route exact path='/' element={<Home />} />
+                    <Route exact path='/product' element={<Products />} />
+                    <Route path='/product/:id' element={<ProductDetails />} />
+                </Routes>
             </Container>
         </ThemeProvider>
         

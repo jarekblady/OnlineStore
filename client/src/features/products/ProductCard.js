@@ -1,4 +1,5 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function ProductCard(props) {
     const product = props.product
@@ -30,7 +31,7 @@ function ProductCard(props) {
             </CardContent>
             <CardActions>
                 <Button size="small">Add to cart</Button>
-                <Button size="small">Details</Button>
+                <Button component={Link} to={`/product/${product.id}`} size="small">Details</Button>
             </CardActions>
         </Card>
     )
