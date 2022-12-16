@@ -15,6 +15,17 @@ namespace OnlineStore.Service
         {
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
+
+            CreateMap<Cart, CartDto>();
+            CreateMap<CartDto, Cart>();
+
+            CreateMap<CartProduct, CartProductDto>()
+                .ForMember(d => d.Name, c => c.MapFrom(s => s.Product.Name))
+                .ForMember(d => d.Description, c => c.MapFrom(s => s.Product.Description))
+                .ForMember(d => d.Cost, c => c.MapFrom(s => s.Product.Cost))
+                .ForMember(d => d.Brand, c => c.MapFrom(s => s.Product.Brand))
+                .ForMember(d => d.PictureUrl, c => c.MapFrom(s => s.Product.PictureUrl));
+            CreateMap<CartProductDto, CartProduct>();
         }
     }
 }
