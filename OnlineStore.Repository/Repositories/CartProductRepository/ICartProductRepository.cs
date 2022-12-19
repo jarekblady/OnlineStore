@@ -11,6 +11,7 @@ namespace OnlineStore.Repository.Repositories.CartProductRepository
     {
         Task<List<CartProduct>> GetAllCartProducts();
         Task<CartProduct> GetByIdCartProduct(int id);
+        Task<CartProduct> GetCartProduct(int cartId, int productId);      
         Task CreateCartProduct(CartProduct cartProduct);
         Task UpdateCartProduct(CartProduct cartProduct);
         void DeleteCartProduct(CartProduct cartProduct);

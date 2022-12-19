@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Repository;
 using OnlineStore.Repository.Context;
+using OnlineStore.Repository.Repositories.CartProductRepository;
+using OnlineStore.Repository.Repositories.CartRepository;
 using OnlineStore.Repository.Repositories.ProductRepository;
+using OnlineStore.Service.Services.CartService;
 using OnlineStore.Service.Services.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +20,10 @@ builder.Services.AddDbContext<StoreDbContext>(options => options.UseSqlServer(bu
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartProductRepository, CartProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddCors();
 
@@ -54,7 +59,7 @@ using (var scope = app.Services.CreateScope())
 app.UseHttpsRedirection();
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:3000");
 });
 
 app.UseAuthorization();

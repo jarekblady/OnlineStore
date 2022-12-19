@@ -9,6 +9,7 @@ namespace OnlineStore.Repository.Entities
     public class Cart
     {
         public int Id { get; set; }
+        public string CustomerId { get; set; }
         public ICollection<CartProduct> CartProducts { get; set; }
     }
 }

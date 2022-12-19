@@ -21,7 +21,7 @@ namespace OnlineStore.Repository.Repositories.CartRepository
         public async Task<List<Cart>> GetAllCarts()
         {
 
-            return await _context.Carts.ToListAsync();
+            return await _context.Carts.Include(p => p.CartProducts).ThenInclude(p => p.Product).ToListAsync();
         }
 
 
