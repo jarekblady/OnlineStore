@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import ProductList from "./ProductList";
+import agent from "../../app/api/agent";
 
 function Products() {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
-        fetch('https://localhost:7204/api/product')
-            .then(response => response.json())
-            .then(data => setProducts(data))
+        agent.Products.list()
+            .then(products => setProducts(products))
+            .catch(error => console.log(error))
+            .finally(() => setLoading(false));
     }, [])
 
     return (

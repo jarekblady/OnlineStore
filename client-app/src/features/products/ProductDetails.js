@@ -1,5 +1,5 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
-import axios from "axios";
+import agent from "../../app/api/agent";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
@@ -9,8 +9,8 @@ function ProductDetails() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`https://localhost:7204/api/product/${id}`)
-            .then(response => setProduct(response.data))
+        agent.Products.details(parseInt(id))
+            .then(response => setProduct(response))
             .catch(error => console.log(error))
             .finally(() => setLoading(false))
     }, [id]);

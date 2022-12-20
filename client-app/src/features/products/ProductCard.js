@@ -1,8 +1,17 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import agent from "../../app/api/agent";
+
 
 function ProductCard(props) {
-    const product = props.product
+    const product = props.product;
+
+
+    function handleAddItem(productId) {
+
+        agent.Cart.addProduct(productId);
+    }
+
     return (
         <Card>
             <CardHeader
@@ -30,7 +39,7 @@ function ProductCard(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Add to cart</Button>
+                <Button onClick={() => handleAddItem(product.id)} size="small">Add to cart</Button>
                 <Button component={Link} to={`/product/${product.id}`} size="small">Details</Button>
             </CardActions>
         </Card>

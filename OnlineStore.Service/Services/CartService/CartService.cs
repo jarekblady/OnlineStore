@@ -42,9 +42,9 @@ namespace OnlineStore.Service.Services.CartService
         {
             var cart = _mapper.Map<Cart>(dto);
             await _cartRepository.CreateCart(cart);
-            //var result = cart;
-            //return _mapper.Map<CartDto>(result); 
-            return dto;
+            var result = dto;
+            return _mapper.Map<CartDto>(cart); 
+            //return dto;
         }
 
         public async Task UpdateCart(CartDto dto)

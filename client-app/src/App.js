@@ -1,5 +1,5 @@
 import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { Route, Routes  } from "react-router";
+import { Route, Routes } from "react-router";
 import ProductDetails from "./features/products/ProductDetails";
 import Products from "./features/products/Products";
 import Home from "./features/home/Home";
@@ -7,16 +7,16 @@ import Navigation from "./Navigation";
 
 function App() {
     const theme = createTheme({
-        palette: {           
+        palette: {
             background: {
-                default: '#eaeaea' 
+                default: '#eaeaea'
             }
         }
     })
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Navigation/>
+            <Navigation />
             <Container>
                 <Routes>
                     <Route exact path='/' element={<Home />} />
@@ -25,9 +25,9 @@ function App() {
                 </Routes>
             </Container>
         </ThemeProvider>
-        
-        
-        );
-        }
+
+
+    );
+}
 
 export default App;

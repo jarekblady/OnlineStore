@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Repository", "O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Service", "OnlineStore.Service\OnlineStore.Service.csproj", "{255022D1-F2A3-45DB-A935-85D0125EDE0D}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "client", "client\client.esproj", "{A809FBB5-B37F-48F6-9C46-C031D814BDB7}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "client-app", "client-app\client-app.esproj", "{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +29,12 @@ Global
 		{255022D1-F2A3-45DB-A935-85D0125EDE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{255022D1-F2A3-45DB-A935-85D0125EDE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{255022D1-F2A3-45DB-A935-85D0125EDE0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A809FBB5-B37F-48F6-9C46-C031D814BDB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A809FBB5-B37F-48F6-9C46-C031D814BDB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A809FBB5-B37F-48F6-9C46-C031D814BDB7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A809FBB5-B37F-48F6-9C46-C031D814BDB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A809FBB5-B37F-48F6-9C46-C031D814BDB7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A809FBB5-B37F-48F6-9C46-C031D814BDB7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D2E06C-B7AC-483A-B37F-7A58B89D8D1C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
