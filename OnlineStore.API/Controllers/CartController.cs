@@ -66,13 +66,14 @@ namespace OnlineStore.API.Controllers
         }
 
         [HttpDelete("RemoveProduct")]
-        public async Task<ActionResult> RemoveProductFromCart(int productId, int count)
+        public async Task<ActionResult<CartDto>> RemoveProductFromCart(int productId, int count)
         {
             var cart = await RetrieveCart();
 
             await _cartService.RemoveProduct(cart.Id, productId, count);
 
-            return Ok("Success");
+            var dto = await _cartService.GetByIdCart(cart.Id);
+            return Ok(dto);
         }
         
         

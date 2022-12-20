@@ -1,41 +1,32 @@
 import { Add, Delete, Remove } from "@mui/icons-material";
-//import { LoadingButton } from "@mui/lab";
 import { Button, IconButton, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import agent from "../../app/api/agent";
-//import { useStoreContext } from "../../app/context/StoreContext";
-//import BasketSummary from "./BasketSummary";
+import { useStoreContext } from "../../app/context/StoreContext";
 
 function Cart() {
-    const [cart, setCart] = useState(null);
+    const { cart, setCart} = useStoreContext();
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        agent.Cart.get()
+    
+    function handleAddItem(productId) {
+        agent.Cart.addProduct(productId)
             .then(cart => setCart(cart))
             .catch(error => console.log(error))
             .finally(() => setLoading(false));
-    }, [])
-
-
-    /*
-    function handleAddItem(productId, name) {
-        setStatus({ loading: true, name });
-        agent.Cart.addProduct(productId)
+    }
+    
+    function handleRemoveItem(productId, count) {
+        agent.Cart.removeProduct(productId, count)
+            .then(cart => setCart(cart))
             .catch(error => console.log(error))
-            .finally(() => setStatus({ loading: false, name: '' }))
+            .finally(() => setLoading(false));
     }
 
-    function handleRemoveItem(productId, count = 1, name) {
-        setStatus({ loading: true, name });
-        agent.Cart.removeProduct(productId, count)
-            .catch(error => console.log(error))
-            .finally(() => setStatus({ loading: false, name: '' }));
-    }*/
-
     if (!cart) return <Typography variant='h3'>Your cart is empty</Typography>
+
+    const total = cart?.cartProducts.reduce((sum, item) => sum + (item.count * item.cost), 0) ?? 0;
 
     return (
         <>
@@ -45,8 +36,8 @@ function Cart() {
                         <TableRow>
                             <TableCell>Product</TableCell>
                             <TableCell align="right">Cost</TableCell>
-                            <TableCell align="right">Count</TableCell>
-                            <TableCell align="right">Subtotal</TableCell>
+                            <TableCell align="center">Count</TableCell>
+                            <TableCell align="right">TotalCost</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
                     </TableHead>
@@ -63,11 +54,23 @@ function Cart() {
                                     </Box>
                                 </TableCell>
                                 <TableCell align="right">${(item.cost / 100).toFixed(2)}</TableCell>
-                                <TableCell align="right">{item.count}</TableCell>
-
+                                <TableCell align="center">
+                                    <IconButton
+                                        onClick={() => handleRemoveItem(item.productId, 1)}
+                                        color='error'>
+                                        <Remove />
+                                    </IconButton>
+                                    {item.count}
+                                    <IconButton
+                                        onClick={() => handleAddItem(item.productId)}
+                                        color='secondary'>
+                                        <Add />
+                                    </IconButton>
+                                </TableCell>
                                 <TableCell align="right">${((item.cost / 100) * item.count).toFixed(2)}</TableCell>
                                 <TableCell align="right">
-                                    <IconButton color='error'>
+                                    <IconButton onClick={() => handleRemoveItem(item.productId, item.count)}
+                                        color='error'>
                                         <Delete />
                                     </IconButton>
                                 </TableCell>
@@ -76,7 +79,30 @@ function Cart() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            
+            <Grid container>
+                <Grid item xs={6} />
+                <Grid item xs={6}>
+                    <TableContainer component={Paper} variant={'outlined'}>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell colSpan={2}>Total</TableCell>
+                                    <TableCell align="right">${(total / 100).toFixed(2)}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Button
+                        component={Link}
+                        to='/checkout'
+                        variant='contained'
+                        size='large'
+                        fullWidth
+                    >
+                        Checkout
+                    </Button>
+                </Grid>
+            </Grid>
         </>
 
     )

@@ -4,6 +4,7 @@ import ProductDetails from "./features/products/ProductDetails";
 import Products from "./features/products/Products";
 import Home from "./features/home/Home";
 import Cart from "./features/cart/Cart";
+import Checkout from "./features/checkout/Checkout";
 import Navigation from "./Navigation";
 import { useEffect, useState } from "react";
 import { useStoreContext } from "./app/context/StoreContext";
@@ -45,6 +46,7 @@ function App() {
                     <Route exact path='/product' element={<Products />} />
                     <Route path='/product/:id' element={<ProductDetails />} />
                     <Route path='/cart' element={<Cart />} />
+                    <Route path='/checkout' element={<Checkout />} />
                 </Routes>
             </Container>
         </ThemeProvider>
