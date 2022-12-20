@@ -16,6 +16,16 @@ namespace OnlineStore.API.Controllers
             _cartService = cartService;
         }
         [HttpGet]
+        public async Task<ActionResult<CartDto>> GetCart()
+        {
+            var cart = await RetrieveCart();
+
+            if (cart == null) return NotFound();
+
+            return cart;
+        }
+        /*
+        [HttpGet]
         public async Task<ActionResult<List<CartDto>>> GetAllCarts()
         {
             return Ok(await _cartService.GetAllCarts());
@@ -25,7 +35,7 @@ namespace OnlineStore.API.Controllers
         public async Task<ActionResult<CartDto>> GetCart(int id)
         {
             return Ok(await _cartService.GetByIdCart(id));
-        }
+        }*/
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCart(CartDto dto)
@@ -44,16 +54,15 @@ namespace OnlineStore.API.Controllers
         }
         
         [HttpPost("AddProduct")]
-        public async Task<ActionResult> AddProductToCart(int productId, int count)
+        public async Task<ActionResult<CartDto>> AddProductToCart(int productId, int count)
         {
             var cart = await RetrieveCart();
 
             if (cart == null) cart = await CreateCart();
 
             await _cartService.AddProduct(cart.Id, productId, count);
-
-            return Ok("Success");
-
+            var dto = await _cartService.GetByIdCart(cart.Id);
+            return Ok(dto);
         }
 
         [HttpDelete("RemoveProduct")]

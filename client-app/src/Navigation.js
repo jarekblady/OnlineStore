@@ -1,6 +1,9 @@
 import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Badge, Box, IconButton, List, ListItem, Toolbar, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import agent from "./app/api/agent";
+import { useStoreContext } from "./app/context/StoreContext";
 
 function Navigation() {
     const midLinks = [
@@ -23,6 +26,20 @@ function Navigation() {
             color: 'text.secondary'
         }
     };
+
+    //const [cart, setCart] = useState(null);
+    //const [loading, setLoading] = useState(true);
+    /*
+    useEffect(() => {
+        agent.Cart.get()
+            .then(cart => setCart(cart))
+            .catch(error => console.log(error))
+            .finally(() => setLoading(false));
+    }, [])
+    */
+    const { cart } = useStoreContext();
+    const productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0)
+
     return (
         <AppBar position='static' sx={{ mb: 4 }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -57,8 +74,8 @@ function Navigation() {
                             </ListItem>
                         ))}
                     </List>
-                    <IconButton size='large' sx={{ color: 'inherit' }}>
-                        <Badge badgeContent={1} color='secondary'>
+                    <IconButton component={Link} to='/cart' size='large' sx={{ color: 'inherit' }}>
+                        <Badge badgeContent={productCount} color='secondary'>
                             <ShoppingCart />
                         </Badge>
                     </IconButton>
