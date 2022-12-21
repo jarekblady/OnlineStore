@@ -1,6 +1,6 @@
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { useState } from "react";
 import { useStoreContext } from "../../context/StoreContext";
 
@@ -20,32 +20,27 @@ function ProductCard(props) {
     return (
         <Card>
             <CardHeader
-                avatar={
-                    <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                        {product.name.charAt(0).toUpperCase()}
-                    </Avatar>
-                }
                 title={product.name}
                 titleTypographyProps={{
-                    sx: { fontWeight: 'bold', color: 'primary.main' }
+                    sx: { fontWeight: 'bold', color: 'warning.main' }
                 }}
             />
             <CardMedia
-                sx={{ height: 140, backgroundSize: 'contain', bgcolor: 'primary.light' }}
+                sx={{ height: 150, backgroundSize: 'contain', bgcolor: 'success.light' }}
                 image={product.pictureUrl}
                 title={product.name}
             />
             <CardContent>
-                <Typography gutterBottom color='secondary' variant="h5">
+                <Typography gutterBottom color='warning' variant="h5">
                     ${(product.cost / 100).toFixed(2)}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="info.main">
                     Brand: {product.brand} 
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={() => handleAddItem(product.id)} size="small">Add to cart</Button>
-                <Button component={Link} to={`/product/${product.id}`} size="small">Details</Button>
+                <Button color='success' onClick={() => handleAddItem(product.id)} size="small">Add to cart</Button>
+                <Button color='secondary' component={Link} to={`/product/${product.id}`} size="small">Details</Button>
             </CardActions>
         </Card>
     )

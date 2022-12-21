@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductList from "./ProductList";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 
 function Products() {
     const [products, setProducts] = useState([]);

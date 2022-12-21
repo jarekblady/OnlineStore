@@ -3,11 +3,11 @@ import { Button, IconButton, Grid, Paper, Table, TableBody, TableCell, TableCont
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { useStoreContext } from "../../context/StoreContext";
 
 function Cart() {
-    const { cart, setCart} = useStoreContext();
+    const { cart, setCart, user} = useStoreContext();
     const [loading, setLoading] = useState(true);
     
     function handleAddItem(productId) {
@@ -92,15 +92,27 @@ function Cart() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Button
+                    {user ? (
+                    <Button                     
                         component={Link}
-                        to='/checkout'
+                            to= '/checkout'
                         variant='contained'
                         size='large'
                         fullWidth                      
                     >
                         Checkout
                     </Button>
+                    ) : (
+                    <Button                     
+                        component={Link}
+                        to = '/login'                       
+                        variant='contained'
+                        size='large'
+                        fullWidth                      
+                    >
+                        Checkout
+                        </Button>
+                    )}
                 </Grid>
             </Grid>
         </>

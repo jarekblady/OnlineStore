@@ -10,7 +10,7 @@ import Register from "./features/account/Register";
 import Navigation from "./Navigation";
 import { useEffect, useState } from "react";
 import { useStoreContext } from "./context/StoreContext";
-import agent from "./app/api/agent";
+import agent from "./api/agent";
 
 function App() {
     const { setCart } = useStoreContext();

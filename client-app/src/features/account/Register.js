@@ -9,7 +9,7 @@ import { Paper } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
-import agent from '../../app/api/agent';
+import agent from '../../api/agent';
 import { toast } from 'react-toastify';
 
 export default function Register() {

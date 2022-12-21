@@ -9,9 +9,13 @@ import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
+import { useStoreContext } from "../../context/StoreContext";
+import { useEffect, useState } from "react";
 
 export default function Login() {
+    const { setUser } = useStoreContext();
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -21,7 +25,10 @@ export default function Login() {
     async function submitForm(data) {
 
         try {
-            await agent.Account.login(data);
+            await agent.Account.login(data)
+                .then(user => setUser(user))
+                .catch(error => console.log(error))
+                .finally(() => setLoading(false));    ;
 
             navigate('/product');
         } catch (error) {

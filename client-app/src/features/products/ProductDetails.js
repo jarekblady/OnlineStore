@@ -1,5 +1,5 @@
 import { Button, Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
-import agent from "../../app/api/agent";
+import agent from "../../api/agent";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useStoreContext } from "../../context/StoreContext";
@@ -34,7 +34,7 @@ function ProductDetails() {
     return (
         <Grid container spacing={6}>
             <Grid item xs={6}>
-                <img src={product.pictureUrl} alt={product.name} style={{ width: '100%' }} />
+                <img src={product.pictureUrl} alt={product.name} style={{ height: 300}} />
             </Grid>
             <Grid item xs={6}>
                 <Typography variant='h3'>{product.name}</Typography>
@@ -62,8 +62,8 @@ function ProductDetails() {
                     <Grid item xs={6}>
                         <Button
                             onClick={() =>handleAddItem(product.id)}
-                            sx={{ height: '55px' }}
-                            color='primary'
+                            sx={{ height: '50px' }}
+                            color='success'
                             size='large'
                             variant='contained'
                             fullWidth
