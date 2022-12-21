@@ -1,9 +1,16 @@
+using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Repository;
 using OnlineStore.Repository.Context;
+using OnlineStore.Repository.Entities;
+using OnlineStore.Repository.Repositories.AccountRepository;
 using OnlineStore.Repository.Repositories.CartProductRepository;
 using OnlineStore.Repository.Repositories.CartRepository;
 using OnlineStore.Repository.Repositories.ProductRepository;
+using OnlineStore.Service;
+using OnlineStore.Service.Services.AccountService;
 using OnlineStore.Service.Services.CartService;
 using OnlineStore.Service.Services.ProductService;
 
@@ -15,6 +22,33 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+var authenticationSettings = new AuthenticationSettings();
+builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+
+builder.Services.AddSingleton(authenticationSettings);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Bearer";
+    options.DefaultScheme = "Bearer";
+    options.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(cfg =>
+{
+    cfg.RequireHttpsMetadata = false;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = authenticationSettings.JwtIssuer,
+        ValidAudience = authenticationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+    };
+});
+
+
+
+
 builder.Services.AddDbContext<StoreDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("StoreConnectionString")));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -22,8 +56,11 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartProductRepository, CartProductRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddCors();
 
@@ -55,7 +92,7 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred creating the DB.");
     }
 }
-
+app.UseAuthentication();
 //app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors(opt =>
