@@ -26,7 +26,8 @@ namespace OnlineStore.API.Controllers
         public ActionResult Login(LoginUserDto dto)
         {
             string token = _accountService.GenerateJwt(dto);
-            return Ok(token);
+            //return Ok(token);
+            return Ok(dto);
 
         }
     }

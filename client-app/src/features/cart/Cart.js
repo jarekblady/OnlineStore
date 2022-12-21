@@ -1,10 +1,10 @@
-import { Add, Delete, Remove } from "@mui/icons-material";
+import { AddCircle, RemoveCircle, Clear } from "@mui/icons-material";
 import { Button, IconButton, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import agent from "../../app/api/agent";
-import { useStoreContext } from "../../app/context/StoreContext";
+import { useStoreContext } from "../../context/StoreContext";
 
 function Cart() {
     const { cart, setCart} = useStoreContext();
@@ -58,20 +58,20 @@ function Cart() {
                                     <IconButton
                                         onClick={() => handleRemoveItem(item.productId, 1)}
                                         color='error'>
-                                        <Remove />
+                                        <RemoveCircle />
                                     </IconButton>
                                     {item.count}
                                     <IconButton
                                         onClick={() => handleAddItem(item.productId)}
-                                        color='secondary'>
-                                        <Add />
+                                        color='success'>
+                                        <AddCircle />
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align="right">${((item.cost / 100) * item.count).toFixed(2)}</TableCell>
                                 <TableCell align="right">
                                     <IconButton onClick={() => handleRemoveItem(item.productId, item.count)}
                                         color='error'>
-                                        <Delete />
+                                        <Clear />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
@@ -97,7 +97,7 @@ function Cart() {
                         to='/checkout'
                         variant='contained'
                         size='large'
-                        fullWidth
+                        fullWidth                      
                     >
                         Checkout
                     </Button>

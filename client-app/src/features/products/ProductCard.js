@@ -1,8 +1,8 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import agent from "../../app/api/agent";
-import { useState, useEffect } from "react";
-import { useStoreContext } from "../../app/context/StoreContext";
+import { useState } from "react";
+import { useStoreContext } from "../../context/StoreContext";
 
 function ProductCard(props) {
     const product = props.product;
@@ -11,13 +11,10 @@ function ProductCard(props) {
 
     function handleAddItem(productId) {
         
-
         agent.Cart.addProduct(productId)
             .then(cart => setCart(cart))
             .catch (error => console.log(error))
-            .finally(() => setLoading(false));
-        
-         
+            .finally(() => setLoading(false));              
     }
 
     return (

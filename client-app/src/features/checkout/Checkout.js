@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 function Checkout() {
     return (
         <Typography variant='h3'>
-            Checkout for only logged in users.
+            Thank you for your purchase!
         </Typography>
     )
 }

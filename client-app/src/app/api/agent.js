@@ -21,12 +21,19 @@ const Products = {
 const Cart = {
     get: () => requests.get('cart'),
     addProduct: (productId, count = 1) => requests.post(`cart/AddProduct?productId=${productId}&count=${count}`, {}),
-    removeProduct: (productId, count = 1) => requests.delete(`cart/RemoveProduct?productId=${productId}&count=${count}`)
+    removeProduct: (productId, count = 1) => requests.delete(`cart/RemoveProduct?productId=${productId}&count=${count}`),
+}
+
+const Account = {
+    login: (values) => requests.post('account/login', values),
+    register: (values) => requests.post('account/register', values),
+    currentUser: () => requests.get('account/currentUser'),
 }
 
 const agent = {
     Products,
-    Cart
+    Cart,
+    Account
 }
 
 export default agent;

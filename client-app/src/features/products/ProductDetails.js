@@ -2,7 +2,7 @@ import { Button, Divider, Grid, Table, TableBody, TableCell, TableContainer, Tab
 import agent from "../../app/api/agent";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useStoreContext } from "../../app/context/StoreContext";
+import { useStoreContext } from "../../context/StoreContext";
 
 function ProductDetails() {
     const { id } = useParams();
@@ -28,7 +28,6 @@ function ProductDetails() {
             .then(cart => setCart(cart))
             .catch(error => console.log(error))
             .finally(() => setLoading(false));
-
 
     }
 
