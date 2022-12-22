@@ -20,8 +20,6 @@ namespace OnlineStore.API.Controllers
         {
             var cart = await RetrieveCart();
 
-            if (cart == null) return NotFound();
-
             return cart;
         }
 
@@ -66,7 +64,5 @@ namespace OnlineStore.API.Controllers
             return await _cartService.CreateCart(cart);
         }
         
-
-
     }
 }

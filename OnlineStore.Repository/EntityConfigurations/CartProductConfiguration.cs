@@ -19,6 +19,8 @@ namespace OnlineStore.Repository.EntityConfigurations
             builder.HasOne(b => b.Cart)
                 .WithMany(c => c.CartProducts)
                 .HasForeignKey(b => b.CartId);
+            builder.Property(b => b.Count)
+                .IsRequired();
 
         }
     }

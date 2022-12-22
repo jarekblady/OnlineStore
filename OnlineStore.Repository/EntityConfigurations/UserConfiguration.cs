@@ -9,15 +9,18 @@ using OnlineStore.Repository.Entities;
 
 namespace OnlineStore.Repository.EntityConfigurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(p => p.Name)
+            builder.Property(p => p.Email)
                 .IsRequired();
-            builder.Property(p => p.Cost)
+            builder.Property(p => p.FirstName)
                 .IsRequired();
-            builder.Property(p => p.Brand)
+            builder.Property(p => p.LastName)
+                .IsRequired();
+            builder.Property(p => p.PasswordHash)
                 .IsRequired();
         }
     }
