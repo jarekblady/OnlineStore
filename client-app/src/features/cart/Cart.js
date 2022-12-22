@@ -1,27 +1,21 @@
 import { AddCircle, RemoveCircle, Clear } from "@mui/icons-material";
 import { Button, IconButton, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import agent from "../../api/agent";
 import { useStoreContext } from "../../context/StoreContext";
 
 function Cart() {
     const { cart, setCart, user} = useStoreContext();
-    const [loading, setLoading] = useState(true);
     
     function handleAddItem(productId) {
         agent.Cart.addProduct(productId)
-            .then(cart => setCart(cart))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false));
+            .then(cart => setCart(cart));
     }
     
     function handleRemoveItem(productId, count) {
         agent.Cart.removeProduct(productId, count)
-            .then(cart => setCart(cart))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false));
+            .then(cart => setCart(cart));
     }
 
     if (!cart) return <Typography variant='h3'>Your cart is empty</Typography>

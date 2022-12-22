@@ -27,7 +27,6 @@ const Cart = {
 const Account = {
     login: (values) => requests.post('account/login', values),
     register: (values) => requests.post('account/register', values),
-    currentUser: () => requests.get('account/currentUser'),
 }
 
 const agent = {

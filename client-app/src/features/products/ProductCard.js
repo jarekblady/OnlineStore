@@ -1,20 +1,16 @@
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import agent from "../../api/agent";
-import { useState } from "react";
 import { useStoreContext } from "../../context/StoreContext";
 
 function ProductCard(props) {
     const product = props.product;
-    const [loading, setLoading] = useState(true);
     const { setCart } = useStoreContext();
 
     function handleAddItem(productId) {
         
         agent.Cart.addProduct(productId)
-            .then(cart => setCart(cart))
-            .catch (error => console.log(error))
-            .finally(() => setLoading(false));              
+            .then(cart => setCart(cart));              
     }
 
     return (

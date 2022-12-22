@@ -1,8 +1,6 @@
-import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
@@ -14,7 +12,7 @@ import { toast } from 'react-toastify';
 
 export default function Register() {
     const navigate= useNavigate();
-    const { register, handleSubmit, setError, formState: { isSubmitting, errors, isValid } } = useForm({
+    const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
         mode: 'all'
     });
 
@@ -36,9 +34,6 @@ export default function Register() {
 
     return (
         <Container component={Paper} maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-            </Avatar>
             <Typography component="h1" variant="h5">
                 Register
             </Typography>

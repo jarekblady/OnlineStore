@@ -1,9 +1,7 @@
-import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
@@ -11,11 +9,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import agent from "../../api/agent";
 import { useStoreContext } from "../../context/StoreContext";
-import { useEffect, useState } from "react";
 
 export default function Login() {
     const { setUser } = useStoreContext();
-    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -26,9 +22,7 @@ export default function Login() {
 
         try {
             await agent.Account.login(data)
-                .then(user => setUser(user))
-                .catch(error => console.log(error))
-                .finally(() => setLoading(false));    ;
+                .then(user => setUser(user));    
 
             navigate('/product');
         } catch (error) {
@@ -38,9 +32,6 @@ export default function Login() {
 
     return (
         <Container component={Paper} maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-            </Avatar>
             <Typography component="h1" variant="h5">
                 Sign in
             </Typography>
