@@ -13,6 +13,7 @@ using OnlineStore.Service;
 using OnlineStore.Service.Services.AccountService;
 using OnlineStore.Service.Services.CartService;
 using OnlineStore.Service.Services.ProductService;
+using RestaurantAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
 builder.Services.AddCors();
 
 builder.Services.AddSwaggerGen();
@@ -92,6 +95,7 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred creating the DB.");
     }
 }
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthentication();
 //app.UseHttpsRedirection();
 app.UseRouting();

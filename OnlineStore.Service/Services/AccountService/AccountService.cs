@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Repository.Entities;
 using OnlineStore.Repository.Repositories.AccountRepository;
 using OnlineStore.Service.DTOs;
+using RestaurantAPI.Exceptions;
 
 namespace OnlineStore.Service.Services.AccountService
 {
@@ -46,7 +47,12 @@ namespace OnlineStore.Service.Services.AccountService
         {
             var user = _accountRepository.GetUserByEmail(dto.Email);
 
+            if (user == null)
+                throw new BadRequestException("Invalid username or password");
+
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (result == PasswordVerificationResult.Failed)
+                throw new BadRequestException("Invalid username or password");
 
             var claims = new List<Claim>()
             {
