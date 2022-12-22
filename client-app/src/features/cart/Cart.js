@@ -18,7 +18,17 @@ function Cart() {
             .then(cart => setCart(cart));
     }
 
-    if (!cart) return <Typography variant='h3'>Your cart is empty</Typography>
+    function handleRemoveAllItems() {       
+        {
+            cart.cartProducts.map(item => (
+                agent.Cart.removeProduct(item.productId, item.count)
+                    .then(cart => setCart(cart))
+        ))
+        }
+        productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);        
+    }
+    const productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);
+    if (!productCount) return <Typography variant='h3'>Your cart is empty</Typography>
 
     const total = cart?.cartProducts.reduce((sum, item) => sum + (item.count * item.cost), 0) ?? 0;
 
@@ -87,7 +97,8 @@ function Cart() {
                         </Table>
                     </TableContainer>
                     {user ? (
-                    <Button                     
+                        <Button
+                        onClick={() => handleRemoveAllItems()}
                         component={Link}
                             to= '/checkout'
                         variant='contained'
