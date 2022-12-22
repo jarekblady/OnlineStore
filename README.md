@@ -1,9 +1,4 @@
-# OnlineStore
-
-#### This app allows you to create your own reading list. 
-#### The user can add, edit and remove the book.
-#### The user has the option to mark the book as read.
-#### The user can reorder the books.
+# Online Electronics Store
 
 ## Configuration
 #### 1. In the first step, change "ConnectionStrings" in [appsettings.json](https://github.com/jarekblady/OnlineStore/blob/master/OnlineStore.API/appsettings.json)
