@@ -26,13 +26,13 @@ function ProductCard(props) {
                 }}
             />
             <CardMedia
-                sx={{ height: 150, backgroundSize: 'contain', bgcolor: 'success.light' }}
+                sx={{ height: 150, backgroundSize: 'contain' }}
                 image={product.pictureUrl}
                 title={product.name}
             />
             <CardContent>
                 <Typography gutterBottom color='warning' variant="h5">
-                    ${(product.cost / 100).toFixed(2)}
+                    ${(product.cost).toFixed(2)}
                 </Typography>
                 <Typography variant="body2" color="info.main">
                     Brand: {product.brand} 

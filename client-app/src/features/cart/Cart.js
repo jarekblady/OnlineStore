@@ -53,7 +53,7 @@ function Cart() {
                                         <span>{item.name}</span>
                                     </Box>
                                 </TableCell>
-                                <TableCell align="right">${(item.cost / 100).toFixed(2)}</TableCell>
+                                <TableCell align="right">${(item.cost).toFixed(2)}</TableCell>
                                 <TableCell align="center">
                                     <IconButton
                                         onClick={() => handleRemoveItem(item.productId, 1)}
@@ -67,7 +67,7 @@ function Cart() {
                                         <AddCircle />
                                     </IconButton>
                                 </TableCell>
-                                <TableCell align="right">${((item.cost / 100) * item.count).toFixed(2)}</TableCell>
+                                <TableCell align="right">${((item.cost) * item.count).toFixed(2)}</TableCell>
                                 <TableCell align="right">
                                     <IconButton onClick={() => handleRemoveItem(item.productId, item.count)}
                                         color='error'>
@@ -87,7 +87,7 @@ function Cart() {
                             <TableBody>
                                 <TableRow>
                                     <TableCell colSpan={2}>Total</TableCell>
-                                    <TableCell align="right">${(total / 100).toFixed(2)}</TableCell>
+                                    <TableCell align="right">${(total).toFixed(2)}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
