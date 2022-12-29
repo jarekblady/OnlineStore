@@ -1,8 +1,10 @@
 using System.Text;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OnlineStore.API.Validators;
 using OnlineStore.Repository;
 using OnlineStore.Repository.Context;
 using OnlineStore.Repository.Entities;
@@ -11,6 +13,7 @@ using OnlineStore.Repository.Repositories.CartProductRepository;
 using OnlineStore.Repository.Repositories.CartRepository;
 using OnlineStore.Repository.Repositories.ProductRepository;
 using OnlineStore.Service;
+using OnlineStore.Service.DTOs;
 using OnlineStore.Service.Services.AccountService;
 using OnlineStore.Service.Services.CartService;
 using OnlineStore.Service.Services.ProductService;
@@ -55,6 +58,7 @@ builder.Services.AddDbContext<StoreDbContext>(options => options.UseSqlServer(bu
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddFluentValidationAutoValidation(conf => { conf.DisableDataAnnotationsValidation = true; });
+builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 

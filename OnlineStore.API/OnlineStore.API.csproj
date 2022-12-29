@@ -24,8 +24,4 @@
     <ProjectReference Include="..\OnlineStore.Service\OnlineStore.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
-
 </Project>
