@@ -16,7 +16,7 @@ namespace OnlineStore.API.Controllers
         }
         [HttpPost("register")]
 
-        public async Task<IActionResult> RegisterUser(RegisterUserDto dto)
+        public ActionResult RegisterUser(RegisterUserDto dto)
         {
             _accountService.RegisterUser(dto);
             return Ok();
