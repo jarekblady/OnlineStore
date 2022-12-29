@@ -24,9 +24,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 
-
-builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 var authenticationSettings = new AuthenticationSettings();
+
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 
 builder.Services.AddSingleton(authenticationSettings);
@@ -54,6 +53,10 @@ builder.Services.AddDbContext<StoreDbContext>(options => options.UseSqlServer(bu
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartProductRepository, CartProductRepository>();
@@ -63,7 +66,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
 
 builder.Services.AddCors();
 
