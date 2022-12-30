@@ -22,11 +22,16 @@ export default function Login() {
                 password: event.target.password.value,
             })
         })
-            .then(res => res.json())
-            .then((result) => {
-                setUser(result)               
+            .then(res => {
+                if (!res.ok) res.text().then((value) => setError(value))
+                else {
+                    setError()
+                    return res.json()
+                }
             })
-        !user ? setError("Incorrect e-mail or password") : setError()
+            .then((result) => {
+                setUser(result)
+            })
     };
 
 
