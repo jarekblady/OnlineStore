@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useStoreContext } from "../../context/StoreContext";
 
 export default function Login() {
-    const { user, setUser } = useStoreContext();
+    const { setUser } = useStoreContext();
     const [error, setError] = useState();
 
 

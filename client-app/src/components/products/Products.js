@@ -4,14 +4,11 @@ import agent from "../../api/agent";
 
 function Products() {
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
-        agent.Products.list()
-            .then(products => setProducts(products))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false));
+        agent.Products.getAllProducts()
+            .then(products => setProducts(products));
     }, [])
 
     return (

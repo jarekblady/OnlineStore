@@ -13,8 +13,8 @@ const requests = {
 }
 
 const Products = {
-    list: () => requests.get('product'),
-    details: (id) => requests.get(`product/${id}`)
+    getAllProducts: () => requests.get('product'),
+    getProductById: (id) => requests.get(`product/${id}`)
 }
 
 

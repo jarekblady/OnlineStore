@@ -7,28 +7,20 @@ import { useStoreContext } from "../../context/StoreContext";
 function ProductDetails() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
     const { setCart } = useStoreContext();
 
     useEffect(() => {
-        agent.Products.details(parseInt(id))
+        agent.Products.getProductById(parseInt(id))
             .then(response => setProduct(response))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false))
     }, [id]);
 
-    if (loading) return <h3>Loading...</h3>
 
     if (!product) return <h3>Product not found</h3>
 
     function handleAddItem(productId) {
 
-
         agent.Cart.addProduct(productId)
-            .then(cart => setCart(cart))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false));
-
+            .then(cart => setCart(cart));
     }
 
     return (
