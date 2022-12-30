@@ -13,7 +13,9 @@ namespace OnlineStore.Service
     {
         public MappingProfiles()
         {
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>()
+                .ForMember(d => d.Brand, o => o.MapFrom(s => s.Brand.BrandName))
+                .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.CategoryName)); ;
             CreateMap<ProductDto, Product>();
 
             CreateMap<Cart, CartDto>();

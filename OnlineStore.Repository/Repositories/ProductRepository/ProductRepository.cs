@@ -21,13 +21,13 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
         public async Task<List<Product>> GetAllProducts()
         {
 
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(x => x.Brand).Include(x => x.Category).ToListAsync();
         }
 
 
         public async Task <Product> GetByIdProduct(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products.Include(x => x.Brand).Include(x => x.Category).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task CreateProduct(Product product)

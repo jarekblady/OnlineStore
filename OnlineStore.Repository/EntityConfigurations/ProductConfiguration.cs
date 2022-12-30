@@ -17,8 +17,6 @@ namespace OnlineStore.Repository.EntityConfigurations
                 .IsRequired();
             builder.Property(p => p.Cost)
                 .IsRequired();
-            builder.Property(p => p.Brand)
-                .IsRequired();
         }
     }
 }

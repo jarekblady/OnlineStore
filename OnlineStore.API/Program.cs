@@ -74,7 +74,6 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
 
-
 builder.Services.AddCors();
 
 builder.Services.AddSwaggerGen();
