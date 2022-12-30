@@ -24,15 +24,10 @@ const Cart = {
     removeProduct: (productId, count = 1) => requests.delete(`cart/RemoveProduct?productId=${productId}&count=${count}`),
 }
 
-const Account = {
-    login: (values) => requests.post('account/login', values),
-    register: (values) => requests.post('account/register', values),
-}
 
 const agent = {
     Products,
-    Cart,
-    Account
+    Cart
 }
 
 export default agent;

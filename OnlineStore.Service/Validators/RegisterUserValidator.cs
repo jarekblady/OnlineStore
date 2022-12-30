@@ -13,6 +13,7 @@ namespace OnlineStore.API.Validators
                 .EmailAddress().WithMessage("Invalid format for Email");
 
             RuleFor(x => x.Password)
+                .NotEmpty().WithMessage("Password is required")
                 .MinimumLength(6).WithMessage("Minimum Length: 6 characters");
 
             RuleFor(x => x.FirstName)
