@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using OnlineStore.Repository;
 using OnlineStore.Repository.Entities;
 using OnlineStore.Repository.Repositories.ProductRepository;
 using OnlineStore.Service.DTOs;
@@ -22,10 +23,15 @@ namespace OnlineStore.Service.Services.ProductService
         }
 
 
-        public async Task<List<ProductDto>> GetAllProducts()
+        public async Task<PagedResult<ProductDto>> GetAllProducts(ProductQuery query)
         {
-            var products = await _productRepository.GetAllProducts();
-            return _mapper.Map<List<ProductDto>>(products);
+            var p = await _productRepository.GetAllProducts(query);
+            var productsDtos = _mapper.Map<List<ProductDto>>(p.Items);
+
+
+            var result = new PagedResult<ProductDto>(productsDtos, p.TotalItemsCount, p.ItemsFrom, p.ItemsTo, p.TotalPages);
+
+            return result;
         }
 
         public async Task<ProductDto> GetByIdProduct(int id)

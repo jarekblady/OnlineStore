@@ -9,7 +9,7 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
 {
     public interface IProductRepository
     {
-        Task <List<Product>> GetAllProducts();
+        Task<PagedResult<Product>> GetAllProducts(ProductQuery query);
         Task <Product> GetByIdProduct(int id);
         Task CreateProduct(Product product);
         Task UpdateProduct(Product product);

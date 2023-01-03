@@ -18,12 +18,29 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllProducts()
+        public async Task<PagedResult<Product>> GetAllProducts(ProductQuery query)
         {
 
-            return await _context.Products.Include(x => x.Brand).Include(x => x.Category).ToListAsync();
-        }
+            var baseQuery = _context.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .Sort(query.OrderBy)
+                .Search(query.SearchPhrase)
+                .Filter(query.BrandId, query.CategoryId);
 
+
+            
+            var products = await baseQuery
+                .Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize)
+                .ToListAsync();
+
+            var totalItemsCount = baseQuery.Count();
+
+            var result = new PagedResult<Product>(products, totalItemsCount, query.PageSize, query.PageNumber);
+
+            return result;
+        }
 
         public async Task <Product> GetByIdProduct(int id)
         {
@@ -51,5 +68,7 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
             _context.SaveChanges();
 
         }
+
+
     }
 }

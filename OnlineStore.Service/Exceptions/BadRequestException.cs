@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestaurantAPI.Exceptions
+namespace OnlineStore.Service.Exceptions
 {
     public class BadRequestException : Exception
     {

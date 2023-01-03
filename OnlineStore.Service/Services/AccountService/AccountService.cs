@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Repository.Entities;
 using OnlineStore.Repository.Repositories.AccountRepository;
 using OnlineStore.Service.DTOs;
-using RestaurantAPI.Exceptions;
+using OnlineStore.Service.Exceptions;
 
 namespace OnlineStore.Service.Services.AccountService
 {

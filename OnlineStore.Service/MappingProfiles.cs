@@ -28,6 +28,12 @@ namespace OnlineStore.Service
                 .ForMember(d => d.Brand, c => c.MapFrom(s => s.Product.Brand))
                 .ForMember(d => d.PictureUrl, c => c.MapFrom(s => s.Product.PictureUrl));
             CreateMap<CartProductDto, CartProduct>();
+
+            CreateMap<CategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
+
+            CreateMap<BrandDto, Brand>();
+            CreateMap<Brand, BrandDto>();
         }
     }
 }

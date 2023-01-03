@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using RestaurantAPI.Exceptions;
+using OnlineStore.Service.Exceptions;
 
-namespace RestaurantAPI.Middleware
+namespace OnlineStore.Service.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
