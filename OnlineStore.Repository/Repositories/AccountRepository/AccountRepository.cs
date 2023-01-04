@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OnlineStore.Repository.Context;
 using OnlineStore.Repository.Entities;
 
@@ -19,7 +20,7 @@ namespace OnlineStore.Repository.Repositories.AccountRepository
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == email);
         }
 
         public void CreateUser(User user)

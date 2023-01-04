@@ -18,6 +18,20 @@ namespace OnlineStore.Repository
             {
                 return;
             }
+            var roles = new Role[]
+{
+                new Role() { RoleName = "Admin"},
+                new Role() { RoleName = "User"}
+};
+
+            if (!context.Roles.Any())
+            {
+                foreach (Role r in roles)
+                {
+                    context.Roles.Add(r);
+                }
+                context.SaveChanges();
+            }
 
             var categories = new Category[]
             {

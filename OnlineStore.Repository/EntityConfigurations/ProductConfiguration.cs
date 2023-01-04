@@ -17,6 +17,12 @@ namespace OnlineStore.Repository.EntityConfigurations
                 .IsRequired();
             builder.Property(p => p.Cost)
                 .IsRequired();
+            builder.HasOne(b => b.Brand)
+                .WithMany(c => c.Products)
+                .HasForeignKey(b => b.BrandId);
+            builder.HasOne(b => b.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(b => b.CategoryId);
         }
     }
 }

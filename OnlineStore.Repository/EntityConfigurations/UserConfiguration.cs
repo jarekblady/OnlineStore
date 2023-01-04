@@ -22,6 +22,9 @@ namespace OnlineStore.Repository.EntityConfigurations
                 .IsRequired();
             builder.Property(p => p.PasswordHash)
                 .IsRequired();
+            builder.HasOne(b => b.Role)
+                .WithMany(c => c.Users)
+                .HasForeignKey(b => b.RoleId);
         }
     }
 }
