@@ -1,8 +1,7 @@
 import { useState, useEffect} from "react";
-import { Grid, Paper, TextField } from "@mui/material";
-import { Button, FormControlLabel, Radio, RadioGroup, Pagination } from "@mui/material";
+import { Grid, Paper, TextField, FormControlLabel, Radio, RadioGroup, Pagination } from "@mui/material";
 import ProductList from "./ProductList";
-import { useStoreContext } from "../../context/StoreContext";
+import GetProducts from "../../fetch/getProducts";
 
 
 function Products() {
@@ -12,22 +11,18 @@ function Products() {
     const [orderBy, setOrderBy] = useState("");
     const [searchPhrase, setSearchPhrase] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize] = useState(2);
     const [categoryId, setCategoryId] = useState(0);
     const [brandId, setBrandId] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     
-    const fetchProducts = () => {
-        fetch(`http://localhost:7204/api/product?orderBy=${orderBy}&categoryId=${categoryId}&brandId=${brandId}&searchPhrase=${searchPhrase}&pageNumber=${pageNumber}&pageSize=${pageSize}`, { method: 'GET' })
-        .then(response => response.json())
+
+    useEffect(() => {
+        GetProducts(orderBy, categoryId, brandId, searchPhrase, pageNumber, pageSize)
             .then(result => {
                 setProducts(result.items)
                 setTotalPages(result.totalPages)
             });
-        
-    }
-    useEffect(() => {
-        fetchProducts();
             
     }, [orderBy, searchPhrase, pageNumber, pageSize, categoryId, brandId, totalPages])
     useEffect(() => {

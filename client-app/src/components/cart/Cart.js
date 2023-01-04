@@ -2,33 +2,36 @@ import { AddCircle, RemoveCircle, Clear } from "@mui/icons-material";
 import { Button, IconButton, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import agent from "../../api/agent";
 import { useStoreContext } from "../../context/StoreContext";
+import AddProductToCart from "../../fetch/addProductToCart";
+import RemoveProductFromCart from "../../fetch/removeProductFromCart";
 
 function Cart() {
-    const { cart, setCart, user} = useStoreContext();
-    
+    const { cart, setCart, user } = useStoreContext();
+
+    const productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);
+    if (!productCount) return <Typography variant='h3'>Your cart is empty</Typography>
+
     function handleAddItem(productId) {
-        agent.Cart.addProduct(productId)
-            .then(cart => setCart(cart));
-    }
-    
-    function handleRemoveItem(productId, count) {
-        agent.Cart.removeProduct(productId, count)
+        AddProductToCart(productId)
             .then(cart => setCart(cart));
     }
 
-    function handleRemoveAllItems() {       
-        {
-            cart.cartProducts.map(item => (
-                agent.Cart.removeProduct(item.productId, item.count)
-                    .then(cart => setCart(cart))
-        ))
-        }
-        productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);        
+    function handleRemoveItem(productId, count) {
+        RemoveProductFromCart(productId, count)
+            .then(cart => setCart(cart));
     }
-    const productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);
-    if (!productCount) return <Typography variant='h3'>Your cart is empty</Typography>
+
+    function handleRemoveAllItems() {
+        
+            cart.cartProducts.map(item => (
+                RemoveProductFromCart(item.productId, item.count)
+                    .then(cart => setCart(cart))
+            ))
+        
+        productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);
+    }
+
 
     const total = cart?.cartProducts.reduce((sum, item) => sum + (item.count * item.cost), 0) ?? 0;
 

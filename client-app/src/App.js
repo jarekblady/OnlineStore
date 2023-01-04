@@ -8,21 +8,22 @@ import Checkout from "./components/checkout/Checkout";
 import Login from "./components/account/Login";
 import Register from "./components/account/Register";
 import Navigation from "./Navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useStoreContext } from "./context/StoreContext";
-import agent from "./api/agent";
+import GetCart from "./fetch/getCart";
 
 function App() {
     const { setCart } = useStoreContext();
 
+    
     useEffect(() => {
         const customerId = getCookie('customerId');
         if (customerId) {
-            agent.Cart.get()
+            GetCart()
                 .then(cart => setCart(cart))
-        } 
+        }
     }, [setCart])
-
+    
     function getCookie(key) {
         const b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
         return b ? b.pop() : "";

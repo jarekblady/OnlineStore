@@ -1,25 +1,27 @@
 import { Button, Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
-import agent from "../../api/agent";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useStoreContext } from "../../context/StoreContext";
+import GetProductDetails from "../../fetch/getProductDetails";
+import AddProductToCart from "../../fetch/addProductToCart";
 
 function ProductDetails() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const { setCart } = useStoreContext();
-
+    
     useEffect(() => {
-        agent.Products.getProductById(parseInt(id))
-            .then(response => setProduct(response))
+        GetProductDetails(id)
+            .then(result => {
+                setProduct(result)
+            });
     }, [id]);
-
-
+    
     if (!product) return <h3>Product not found</h3>
 
     function handleAddItem(productId) {
 
-        agent.Cart.addProduct(productId)
+        AddProductToCart(productId)
             .then(cart => setCart(cart));
     }
 
