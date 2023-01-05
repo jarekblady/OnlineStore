@@ -18,20 +18,9 @@ namespace OnlineStore.Repository.Repositories.CartProductRepository
             _context = context;
         }
 
-        public async Task<List<CartProduct>> GetAllCartProducts()
-        {
-
-            return await _context.CartProducts.Include(p => p.Cart).Include(p => p.Product).ToListAsync();
-        }       
-
-        public async Task<CartProduct> GetByIdCartProduct(int id)
-        {
-            return await _context.CartProducts.Include(p => p.Cart).Include(p => p.Product).FirstOrDefaultAsync(p => p.Id == id);
-        }
-
         public async Task<CartProduct> GetCartProduct(int cartId, int productId)
         {
-            return await _context.CartProducts.Include(p => p.Cart).Include(p => p.Product).Where(p =>p.CartId == cartId).FirstOrDefaultAsync(p => p.ProductId== productId);
+            return await _context.CartProducts.Include(p => p.Cart).Include(p => p.Product).ThenInclude(p => p.Brand).Where(p =>p.CartId == cartId).FirstOrDefaultAsync(p => p.ProductId== productId);
         }
 
         public async Task CreateCartProduct(CartProduct cartProduct)

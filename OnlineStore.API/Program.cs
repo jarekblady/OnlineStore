@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using OnlineStore.API.Validators;
 using OnlineStore.Repository;
 using OnlineStore.Repository.Context;
@@ -13,6 +14,8 @@ using OnlineStore.Repository.Repositories.BrandRepository;
 using OnlineStore.Repository.Repositories.CartProductRepository;
 using OnlineStore.Repository.Repositories.CartRepository;
 using OnlineStore.Repository.Repositories.CategoryRepository;
+using OnlineStore.Repository.Repositories.OrderProductRepository;
+using OnlineStore.Repository.Repositories.OrderRepository;
 using OnlineStore.Repository.Repositories.ProductRepository;
 using OnlineStore.Service;
 using OnlineStore.Service.DTOs;
@@ -21,6 +24,7 @@ using OnlineStore.Service.Services.AccountService;
 using OnlineStore.Service.Services.BrandService;
 using OnlineStore.Service.Services.CartService;
 using OnlineStore.Service.Services.CategoryService;
+using OnlineStore.Service.Services.OrderService;
 using OnlineStore.Service.Services.ProductService;
 using OnlineStore.Service.Validators;
 
@@ -76,17 +80,48 @@ builder.Services.AddScoped<ICartProductRepository, CartProductRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderProductRepository, OrderProductRepository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 
 builder.Services.AddCors();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Jwt auth header",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                });
+});
 
 var app = builder.Build();
 
@@ -118,6 +153,7 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthentication();
 //app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthorization();
 app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");

@@ -41,6 +41,8 @@ namespace OnlineStore.API.Controllers
         {
             var cart = await RetrieveCart();
 
+            if (cart == null) return NotFound();
+
             await _cartService.RemoveProduct(cart.Id, productId, count);
 
             var dto = await _cartService.GetByIdCart(cart.Id);
@@ -50,9 +52,10 @@ namespace OnlineStore.API.Controllers
         
         private async Task<CartDto> RetrieveCart()
         {
-            var carts = await _cartService.GetAllCarts();
-            return carts.FirstOrDefault(x => x.CustomerId == Request.Cookies["customerId"]);
 
+            var cookie = Request.Cookies["customerId"];
+
+            return await _cartService.GetCartForCookie(cookie);
         }
 
         private async Task<CartDto> CreateCart()
@@ -60,7 +63,7 @@ namespace OnlineStore.API.Controllers
             var customerId = Guid.NewGuid().ToString();
             var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
             Response.Cookies.Append("customerId", customerId, cookieOptions);
-            var cart = new CartDto { CustomerId = customerId };
+            var cart = new CartDto { CookieHTTP = customerId };
             return await _cartService.CreateCart(cart);
         }
         

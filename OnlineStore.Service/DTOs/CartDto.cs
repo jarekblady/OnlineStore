@@ -9,7 +9,7 @@ namespace OnlineStore.Service.DTOs
     public class CartDto
     {
         public int Id { get; set; }
-        public string CustomerId { get; set; }
+        public string CookieHTTP { get; set; }
         public ICollection<CartProductDto> CartProducts { get; set; }
     }
 }

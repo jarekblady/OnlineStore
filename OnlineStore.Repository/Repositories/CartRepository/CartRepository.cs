@@ -18,16 +18,13 @@ namespace OnlineStore.Repository.Repositories.CartRepository
             _context = context;
         }
 
-        public async Task<List<Cart>> GetAllCarts()
-        {
-
-            return await _context.Carts.Include(p => p.CartProducts).ThenInclude(p => p.Product).ToListAsync();
-        }
-
-
         public async Task<Cart> GetByIdCart(int id)
         {
-            return await _context.Carts.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Carts.Include(p => p.CartProducts).ThenInclude(p => p.Product).ThenInclude(x => x.Brand).FirstOrDefaultAsync(p => p.Id == id);
+        }
+        public async Task<Cart> GetCartForCookie(string cookie)
+        {
+            return await _context.Carts.Include(p => p.CartProducts).ThenInclude(p => p.Product).ThenInclude(x => x.Brand).FirstOrDefaultAsync(x => x.CookieHTTP == cookie);
         }
 
         public async Task CreateCart(Cart cart)

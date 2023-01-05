@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Repository.Context;
 
@@ -11,9 +12,10 @@ using OnlineStore.Repository.Context;
 namespace OnlineStore.Repository.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230104212127_order")]
+    partial class order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,7 +137,10 @@ namespace OnlineStore.Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -145,6 +150,8 @@ namespace OnlineStore.Repository.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("OrderId");
 
@@ -274,11 +281,15 @@ namespace OnlineStore.Repository.Migrations
 
             modelBuilder.Entity("OnlineStore.Repository.Entities.OrderProduct", b =>
                 {
-                    b.HasOne("OnlineStore.Repository.Entities.Order", "Order")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId")
+                    b.HasOne("OnlineStore.Repository.Entities.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("OnlineStore.Repository.Entities.Order", null)
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("OnlineStore.Repository.Entities.Product", "Product")
                         .WithMany()
@@ -286,7 +297,7 @@ namespace OnlineStore.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

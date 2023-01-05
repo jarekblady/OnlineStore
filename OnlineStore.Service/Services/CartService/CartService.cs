@@ -24,19 +24,17 @@ namespace OnlineStore.Service.Services.CartService
             _mapper = mapper;
         }
 
-
-        public async Task<List<CartDto>> GetAllCarts()
-        {
-            var carts = await _cartRepository.GetAllCarts();
-            return _mapper.Map<List<CartDto>>(carts);
-        }
-
         public async Task<CartDto> GetByIdCart(int id)
         {
             var cart = await _cartRepository.GetByIdCart(id);
             return _mapper.Map<CartDto>(cart);
         }
 
+        public async Task<CartDto> GetCartForCookie(string cookie)
+        {
+            var cart = await _cartRepository.GetCartForCookie(cookie);
+            return _mapper.Map<CartDto>(cart);
+        }
 
         public async Task<CartDto> CreateCart(CartDto dto)
         {
@@ -44,13 +42,7 @@ namespace OnlineStore.Service.Services.CartService
             await _cartRepository.CreateCart(cart);
             return _mapper.Map<CartDto>(cart); 
         }
-
-        public async Task UpdateCart(CartDto dto)
-        {
-            var cart = _mapper.Map<Cart>(dto);
-            await _cartRepository.UpdateCart(cart);
-        }
-
+        
         public async Task DeleteCart(int id)
         {
             var cart = await _cartRepository.GetByIdCart(id);
@@ -71,7 +63,6 @@ namespace OnlineStore.Service.Services.CartService
             }
 
         }
-
         public async Task RemoveProduct(int cartId, int productId, int count)
         {
             var product = await _cartProductRepository.GetCartProduct(cartId, productId);

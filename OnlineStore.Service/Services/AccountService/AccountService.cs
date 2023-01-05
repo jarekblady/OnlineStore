@@ -34,7 +34,8 @@ namespace OnlineStore.Service.Services.AccountService
             {
                 Email = dto.Email,
                 FirstName = dto.FirstName,
-                LastName = dto.LastName
+                LastName = dto.LastName,
+                RoleId = dto.RoleId,
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);
 

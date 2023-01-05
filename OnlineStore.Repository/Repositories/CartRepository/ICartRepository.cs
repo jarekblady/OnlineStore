@@ -9,8 +9,8 @@ namespace OnlineStore.Repository.Repositories.CartRepository
 {
     public interface ICartRepository
     {
-        Task<List<Cart>> GetAllCarts();
         Task<Cart> GetByIdCart(int id);
+        Task<Cart> GetCartForCookie(string cookie);
         Task CreateCart(Cart cart);
         Task UpdateCart(Cart cart);
         void DeleteCart(Cart cart);

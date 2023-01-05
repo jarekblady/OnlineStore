@@ -34,6 +34,17 @@ namespace OnlineStore.Service
 
             CreateMap<BrandDto, Brand>();
             CreateMap<Brand, BrandDto>();
+
+            CreateMap<OrderDto, Order>();
+            CreateMap<Order, OrderDto>()
+                .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.FirstName + " "+ s.User.LastName));
+
+            CreateMap<OrderProductDto, OrderProduct>();
+            CreateMap<OrderProduct, OrderProductDto>()
+                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
+                .ForMember(d => d.Cost, o => o.MapFrom(s => s.Product.Cost))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.Product.PictureUrl));
         }
     }
+    
 }

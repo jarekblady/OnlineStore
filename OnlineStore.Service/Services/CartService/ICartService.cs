@@ -10,10 +10,9 @@ namespace OnlineStore.Service.Services.CartService
 {
     public interface ICartService
     {
-        Task<List<CartDto>> GetAllCarts();
         Task<CartDto> GetByIdCart(int id);
+        Task<CartDto> GetCartForCookie(string cookie);
         Task<CartDto> CreateCart(CartDto dto);
-        Task UpdateCart(CartDto dto);
         Task DeleteCart(int id);
         Task AddProduct(int cartId, int productId, int count);
         Task RemoveProduct(int cartId, int productId, int count);
