@@ -13,6 +13,6 @@ namespace OnlineStore.Service.Services.OrderService
         Task<List<OrderDto>> GetOrdersForUser(int userId);
         Task<OrderDto> GetByIdOrder(int id);
         Task CreateOrder(int userId, string cookie);
-        Task UpdateOrder(OrderDto orderDto);
+        Task UpdateOrder(int id, string orderStatus);
     }
 }

@@ -5,35 +5,29 @@ import { Link } from "react-router-dom";
 import { useStoreContext } from "../../context/StoreContext";
 import AddProductToCart from "../../fetch/addProductToCart";
 import RemoveProductFromCart from "../../fetch/removeProductFromCart";
+import AddOrder from "../../fetch/addOrder";
+
 
 function Cart() {
     const { cart, setCart, user } = useStoreContext();
 
-    const productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);
-    if (!productCount) return <Typography variant='h3'>Your cart is empty</Typography>
+    const productQuantity = cart?.cartProducts.reduce((sum, item) => sum + item.quantity, 0);
+    if (!productQuantity) return <Typography variant='h3'>Your cart is empty</Typography>
 
     function handleAddItem(productId) {
         AddProductToCart(productId)
             .then(cart => setCart(cart));
     }
 
-    function handleRemoveItem(productId, count) {
-        RemoveProductFromCart(productId, count)
+    function handleRemoveItem(productId, quantity) {
+        RemoveProductFromCart(productId, quantity)
             .then(cart => setCart(cart));
     }
 
-    function handleRemoveAllItems() {
-        
-            cart.cartProducts.map(item => (
-                RemoveProductFromCart(item.productId, item.count)
-                    .then(cart => setCart(cart))
-            ))
-        
-        productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0);
+    function handleAddOrder() {
+        AddOrder(user.token);
+        setCart();
     }
-
-
-    const total = cart?.cartProducts.reduce((sum, item) => sum + (item.count * item.cost), 0) ?? 0;
 
     return (
         <>
@@ -43,8 +37,8 @@ function Cart() {
                         <TableRow>
                             <TableCell>Product</TableCell>
                             <TableCell align="right">Cost</TableCell>
-                            <TableCell align="center">Count</TableCell>
-                            <TableCell align="right">TotalCost</TableCell>
+                            <TableCell align="center">Quantity</TableCell>
+                            <TableCell align="right">Total</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
                     </TableHead>
@@ -67,16 +61,16 @@ function Cart() {
                                         color='error'>
                                         <RemoveCircle />
                                     </IconButton>
-                                    {item.count}
+                                    {item.quantity}
                                     <IconButton
                                         onClick={() => handleAddItem(item.productId)}
                                         color='success'>
                                         <AddCircle />
                                     </IconButton>
                                 </TableCell>
-                                <TableCell align="right">${((item.cost) * item.count).toFixed(2)}</TableCell>
+                                <TableCell align="right">${((item.cost) * item.quantity).toFixed(2)}</TableCell>
                                 <TableCell align="right">
-                                    <IconButton onClick={() => handleRemoveItem(item.productId, item.count)}
+                                    <IconButton onClick={() => handleRemoveItem(item.productId, item.quantity)}
                                         color='error'>
                                         <Clear />
                                     </IconButton>
@@ -93,15 +87,15 @@ function Cart() {
                         <Table>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell colSpan={2}>Total</TableCell>
-                                    <TableCell align="right">${(total).toFixed(2)}</TableCell>
+                                    <TableCell colSpan={2}>TotalCost</TableCell>
+                                    <TableCell align="right">${cart.totalCost}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
                     </TableContainer>
                     {user ? (
                         <Button
-                        onClick={() => handleRemoveAllItems()}
+                            onClick={() => handleAddOrder()}
                         component={Link}
                             to= '/checkout'
                         variant='contained'

@@ -7,6 +7,8 @@ import Cart from "./components/cart/Cart";
 import Checkout from "./components/checkout/Checkout";
 import Login from "./components/account/Login";
 import Register from "./components/account/Register";
+import Orders from "./components/orders/Orders";
+import AdminPanel from "./components/admin/AdminPanel";
 import Navigation from "./Navigation";
 import { useEffect } from "react";
 import { useStoreContext } from "./context/StoreContext";
@@ -49,6 +51,8 @@ function App() {
                     <Route path='/checkout' element={<Checkout />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
+                    <Route path='/orders' element={<Orders />} />
+                    <Route path='/admin' element={<AdminPanel />} />
                 </Routes>
             </Container>
         </ThemeProvider>

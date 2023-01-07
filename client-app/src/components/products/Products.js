@@ -1,8 +1,10 @@
 import { useState, useEffect} from "react";
 import { Grid, Paper, TextField, FormControlLabel, Radio, RadioGroup, Pagination } from "@mui/material";
+import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import ProductList from "./ProductList";
 import GetProducts from "../../fetch/getProducts";
-
+import GetCategories from "../../fetch/getCategories";
+import GetBrands from "../../fetch/getBrands";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -11,12 +13,11 @@ function Products() {
     const [orderBy, setOrderBy] = useState("");
     const [searchPhrase, setSearchPhrase] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(3);
     const [categoryId, setCategoryId] = useState(0);
     const [brandId, setBrandId] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     
-
     useEffect(() => {
         GetProducts(orderBy, categoryId, brandId, searchPhrase, pageNumber, pageSize)
             .then(result => {
@@ -25,15 +26,15 @@ function Products() {
             });
             
     }, [orderBy, searchPhrase, pageNumber, pageSize, categoryId, brandId, totalPages])
+
     useEffect(() => {
-        fetch('http://localhost:7204/api/product/categories', { method: 'GET' })
-            .then(response => response.json())
+        GetCategories()
             .then(categories => setCategories(categories));
 
     }, [])
+
     useEffect(() => {
-        fetch('http://localhost:7204/api/product/brands', { method: 'GET' })
-            .then(response => response.json())
+        GetBrands()
             .then(brands => setBrands(brands));
 
     }, [])
@@ -53,12 +54,16 @@ function Products() {
     const handlePageNumber = (event, value) => {
         setPageNumber(value);
     };
+    const handleChange = (event) => {
+        setPageSize(event.target.value);
+        setPageNumber(1);
+    };
 
     return (
         <Grid container columnSpacing={4}>
             <Grid item xs={3}>
                 <Paper sx={{ mb: 2, p: 2  }}>
-                    <TextField
+                    <TextField sx={{ mb: 2}}
                         label='Search products'
                         variant='outlined'
                         fullWidth
@@ -67,10 +72,8 @@ function Products() {
                             setSearchPhrase(event.target.value);
                         }}
                     />
-                </Paper>
-                <Paper sx={{ mb: 2, p: 2 }}>
                     Categories:
-                    <RadioGroup
+                    <RadioGroup sx={{ mb: 2 }}
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         value={categoryId}
@@ -81,10 +84,8 @@ function Products() {
                             <FormControlLabel value={category.id} control={<Radio />} label={category.categoryName} />
                         ))}
                     </RadioGroup>
-                </Paper>
-                <Paper sx={{ mb: 2, p: 2 }}>
                     Brands:
-                    <RadioGroup
+                    <RadioGroup sx={{ mb: 2 }}
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         value={brandId}
@@ -95,10 +96,8 @@ function Products() {
                             <FormControlLabel value={brand.id} control={<Radio />} label={brand.brandName} />
                             ))}
                     </RadioGroup>
-                </Paper>
-                <Paper sx={{ mb: 2, p: 2 }}>
                     Sorting: 
-                    <RadioGroup
+                    <RadioGroup sx={{ mb: 2 }}
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         value={orderBy}
@@ -111,19 +110,34 @@ function Products() {
                 </Paper>
             </Grid>
                
-            <Grid item xs={9}>
+            <Grid item xs={9} sx={{ mb: 2 }}>
                 <ProductList products={products} />
             </Grid>
             <Grid item xs={3} />
             <Grid item xs={9} sx={{ mb: 2 }}>
-                <Pagination
-                    color='secondary'
+
+                <FormControl sx={{ m: 1, minWidth: 80, mb: 2 }}>
+                    <InputLabel id="demo-simple-select-label">PageSize</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={pageSize}
+                        label="pageSize"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={6}>6</MenuItem>
+                        <MenuItem value={9}>9</MenuItem>
+                    </Select>
+                </FormControl>
+                <Pagination sx={{ mb: 2 }}
+                    color='warning'
                     size='large'
                     count={totalPages}
                     page={pageNumber}
                     onChange={handlePageNumber}
-                   
                 />
+
             </Grid>
         </Grid>
     )

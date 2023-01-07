@@ -25,25 +25,25 @@ namespace OnlineStore.API.Controllers
 
 
         [HttpPost("AddProduct")]
-        public async Task<ActionResult> AddProductToCart(int productId, int count)
+        public async Task<ActionResult> AddProductToCart(int productId, int quantity)
         {
             var cart = await RetrieveCart();
 
             if (cart == null) cart = await CreateCart();
 
-            await _cartService.AddProduct(cart.Id, productId, count);
+            await _cartService.AddProduct(cart.Id, productId, quantity);
             var dto = await _cartService.GetByIdCart(cart.Id);
             return Ok(dto);
         }
 
         [HttpDelete("RemoveProduct")]
-        public async Task<ActionResult> RemoveProductFromCart(int productId, int count)
+        public async Task<ActionResult> RemoveProductFromCart(int productId, int quantity)
         {
             var cart = await RetrieveCart();
 
             if (cart == null) return NotFound();
 
-            await _cartService.RemoveProduct(cart.Id, productId, count);
+            await _cartService.RemoveProduct(cart.Id, productId, quantity);
 
             var dto = await _cartService.GetByIdCart(cart.Id);
             return Ok(dto);

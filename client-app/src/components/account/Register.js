@@ -61,10 +61,9 @@ export default function Login() {
                     id="email"
                     label="Email Address"
                     name="email"
+                    error={validationEmail}
+                    helperText={validationEmail}
                 />
-                <Typography color="error.main" variant="subtitle1">
-                    {validationEmail}
-                </Typography>
                 <TextField
                     margin="normal"
                     required
@@ -73,10 +72,9 @@ export default function Login() {
                     label="Password"
                     type="password"
                     id="password"
+                    error={validationPassword}
+                    helperText={validationPassword}
                 />
-                <Typography color="error.main" variant="subtitle1">
-                    {validationPassword}
-                </Typography>
                 <TextField
                     margin="normal"
                     required
@@ -84,10 +82,9 @@ export default function Login() {
                     id="firstName"
                     label="FirstName"
                     name="firstName"
+                    error={validationFirstName}
+                    helperText={validationFirstName}
                 />
-                <Typography color="error.main" variant="subtitle1">
-                    {validationFirstName}
-                </Typography>
                 <TextField
                     margin="normal"
                     required
@@ -95,10 +92,9 @@ export default function Login() {
                     id="lastName"
                     label="LastName"
                     name="lastName"
+                    error={validationLastName}
+                    helperText={validationLastName}
                 />
-                <Typography color="error.main" variant="subtitle1">
-                    {validationLastName}
-                </Typography>
                 <Button
                     type="submit"
                     fullWidth

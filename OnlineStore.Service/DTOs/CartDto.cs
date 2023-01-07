@@ -10,6 +10,7 @@ namespace OnlineStore.Service.DTOs
     {
         public int Id { get; set; }
         public string CookieHTTP { get; set; }
+        public double TotalCost { get; set; }
         public ICollection<CartProductDto> CartProducts { get; set; }
     }
 }

@@ -23,9 +23,7 @@ namespace OnlineStore.Service
 
             CreateMap<CartProduct, CartProductDto>()
                 .ForMember(d => d.Name, c => c.MapFrom(s => s.Product.Name))
-                .ForMember(d => d.Description, c => c.MapFrom(s => s.Product.Description))
                 .ForMember(d => d.Cost, c => c.MapFrom(s => s.Product.Cost))
-                .ForMember(d => d.Brand, c => c.MapFrom(s => s.Product.Brand))
                 .ForMember(d => d.PictureUrl, c => c.MapFrom(s => s.Product.PictureUrl));
             CreateMap<CartProductDto, CartProduct>();
 
@@ -37,7 +35,7 @@ namespace OnlineStore.Service
 
             CreateMap<OrderDto, Order>();
             CreateMap<Order, OrderDto>()
-                .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.FirstName + " "+ s.User.LastName));
+                .ForMember(d => d.UserName, o => o.MapFrom(s => s.User.FirstName + " " + s.User.LastName));
 
             CreateMap<OrderProductDto, OrderProduct>();
             CreateMap<OrderProduct, OrderProductDto>()

@@ -43,14 +43,14 @@ namespace OnlineStore.API.Controllers
             await _orderService.CreateOrder(userId, cookie);
             return Ok();
         }
-        /*
-        [HttpPut]
+        
+        [HttpPut("{id}/orderStatus")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateOrder(OrderDto order)
+        public async Task<ActionResult> UpdateOrderStatus(int id, string orderStatus)
         {
-            await _orderService.UpdateOrder(order);
+            await _orderService.UpdateOrder(id, orderStatus);
             return Ok();
-        }*/
+        }
 
     }
 }

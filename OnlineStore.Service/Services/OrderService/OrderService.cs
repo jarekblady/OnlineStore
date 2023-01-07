@@ -17,15 +17,13 @@ namespace OnlineStore.Service.Services.OrderService
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderProductRepository _orderProductRepository;
-        private readonly IProductRepository _productRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IMapper _mapper;
 
-        public OrderService(IOrderRepository orderRepository, IOrderProductRepository orderProductRepository, IProductRepository productRepository, ICartRepository cartRepository, IMapper mapper)
+        public OrderService(IOrderRepository orderRepository, IOrderProductRepository orderProductRepository, ICartRepository cartRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _orderProductRepository = orderProductRepository;
-            _productRepository = productRepository;
             _cartRepository = cartRepository;
             _mapper = mapper;
         }
@@ -48,16 +46,11 @@ namespace OnlineStore.Service.Services.OrderService
         {
             var cart = await _cartRepository.GetCartForCookie(cookie);
 
-            var totalCost = 0.00;
-            foreach (var product in cart.CartProducts)
-            {
-                totalCost += product.Count * product.Product.Cost;
-            }
             var order = new Order()
             {
                 UserId = userId,
                 OrderDate = DateTime.Now,
-                TotalCost = totalCost,
+                TotalCost = cart.TotalCost,
                 OrderStatus = "Pending",
             };
 
@@ -69,16 +62,17 @@ namespace OnlineStore.Service.Services.OrderService
                 {
                     Order = order,
                     ProductId = product.ProductId,
-                    Quantity = product.Count,
+                    Quantity = product.Quantity,
                 };
                 await _orderProductRepository.CreateOrderProduct(orderProduct);
             }
 
             _cartRepository.DeleteCart(cart);
         }
-        public async Task UpdateOrder(OrderDto dto)
+        public async Task UpdateOrder(int id, string orderStatus)
         {
-            var order = _mapper.Map<Order>(dto);
+            var order = await _orderRepository.GetByIdOrder(id);
+            order.OrderStatus = orderStatus;
             await _orderRepository.UpdateOrder(order);
         }
 

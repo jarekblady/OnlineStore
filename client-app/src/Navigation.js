@@ -19,7 +19,7 @@ function Navigation() {
     };
 
     const { cart, user, setUser } = useStoreContext();
-    const productCount = cart?.cartProducts.reduce((sum, item) => sum + item.count, 0)
+    const productQuantity = cart?.cartProducts.reduce((sum, item) => sum + item.quantity, 0)
 
     return (
         <AppBar position='static'>
@@ -34,36 +34,48 @@ function Navigation() {
                         sx={navStyles}>
                         PRODUCTS
                     </Typography>
-
-                    
-                    {user &&
-                        <Typography variant='h6' 
-                            sx={navStyles}>
-                        {user.email}
-                        </Typography>
-                    }
-                    {user &&
-                        <Typography variant='h6' component={NavLink} exact to='/login'
-                        sx={navStyles}
-                        onClick={() => { setUser() }}
-                    >
-                            LOG OUT
-                        </Typography>
-                    }
-                    {!user && 
+                   
+                    {!user &&
+                        <>
                         <Typography variant='h6' component={NavLink} exact to='/login'
                             sx={navStyles}>
                             LOGIN
                         </Typography>
-                    }
-                    {!user &&
                         <Typography variant='h6' component={NavLink} exact to='/register'
                             sx={navStyles}>
                             REGISTER
                         </Typography>
+                        </>
+                    }
+                    {user &&
+                        <Typography variant='h6'
+                            sx={navStyles}>
+                            {user.email}
+                        </Typography>
+                    }
+                    {user &&
+                        <>
+                        <Typography variant='h6' component={NavLink} exact to='/orders'
+                            sx={navStyles}
+                        >
+                            ORDERS
+                        </Typography>
+                        <Typography variant='h6' component={NavLink} exact to='/admin'
+                            sx={navStyles}
+                        >
+                            ADMIN PANEL
+                        </Typography>
+                        <Typography variant='h6' component={NavLink} exact to='/login'
+                            sx={navStyles}
+                            onClick={() => { setUser() }}
+                        >
+                            LOG OUT
+                        </Typography>
+                         </>
+
                     }
                     <IconButton component={Link} to='/cart' size='large' sx={{ color: '#ff3d00' }}>
-                        <Badge badgeContent={productCount} color='success'>
+                        <Badge badgeContent={productQuantity} color='success'>
                             <ShoppingCart />
                         </Badge>
                     </IconButton>

@@ -1,9 +1,8 @@
 ﻿using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Repository;
 using OnlineStore.Service.DTOs;
-using OnlineStore.Service.Services.BrandService;
-using OnlineStore.Service.Services.CategoryService;
 using OnlineStore.Service.Services.ProductService;
 
 namespace OnlineStore.API.Controllers
@@ -13,13 +12,9 @@ namespace OnlineStore.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly ICategoryService _categoryService;
-        private readonly IBrandService _brandService;
-        public ProductController(IProductService productService, ICategoryService categoryService, IBrandService brandService)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _categoryService = categoryService;
-            _brandService = brandService;
         }
 
 
@@ -38,6 +33,7 @@ namespace OnlineStore.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateProduct(ProductDto dto)
         {
             await _productService.CreateProduct(dto);
@@ -45,6 +41,7 @@ namespace OnlineStore.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateProduct(ProductDto dto)
         {
             await _productService.UpdateProduct(dto);
@@ -53,24 +50,12 @@ namespace OnlineStore.API.Controllers
 
 
         [HttpDelete("{id}")]
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             await _productService.DeleteProduct(id);
             return Ok("Success");
         }
-        
-        [HttpGet("categories")]
-        public async Task<ActionResult> GetAllCategories()
-        {
-            return Ok(await _categoryService.GetAllCategories());
-        }
-
-        [HttpGet("brands")]
-        public async Task<ActionResult> GetAllBrands()
-        {
-            return Ok(await _brandService.GetAllBrands());
-        }
-        
+                
     }
 }

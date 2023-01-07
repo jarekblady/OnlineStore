@@ -10,6 +10,7 @@ namespace OnlineStore.Repository.Entities
     {
         public int Id { get; set; }
         public string CookieHTTP { get; set; }
+        public double TotalCost { get; set; }
         public ICollection<CartProduct> CartProducts { get; set; }
     }
 }

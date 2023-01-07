@@ -49,25 +49,25 @@ namespace OnlineStore.Service.Services.CartService
             _cartRepository.DeleteCart(cart);
         }
         
-        public async Task AddProduct(int cartId, int productId, int count)
+        public async Task AddProduct(int cartId, int productId, int quantity)
         {
             var product = await _cartProductRepository.GetCartProduct(cartId, productId);
             if(product == null) { 
-                var cartProduct = new CartProduct { CartId = cartId, ProductId = productId, Count = count };
+                var cartProduct = new CartProduct { CartId = cartId, ProductId = productId, Quantity = quantity };
                 await _cartProductRepository.CreateCartProduct(cartProduct);
             }
             else
             {
-                product.Count += count;
+                product.Quantity += quantity;
                 await _cartProductRepository.UpdateCartProduct(product);
             }
-
+            await UpdateCartTotal(cartId);
         }
-        public async Task RemoveProduct(int cartId, int productId, int count)
+        public async Task RemoveProduct(int cartId, int productId, int quantity)
         {
             var product = await _cartProductRepository.GetCartProduct(cartId, productId);
-            product.Count -= count;
-            if(product.Count == 0)
+            product.Quantity -= quantity;
+            if(product.Quantity == 0)
             {
                 _cartProductRepository.DeleteCartProduct(product);
             }
@@ -75,6 +75,18 @@ namespace OnlineStore.Service.Services.CartService
             {
                 await _cartProductRepository.UpdateCartProduct(product);
             }
+            await UpdateCartTotal(cartId);
+        }
+        private async Task UpdateCartTotal(int cartId)
+        {
+            var cart = await _cartRepository.GetByIdCart(cartId);
+            cart.TotalCost = 0.00;
+
+            foreach (var product in cart.CartProducts)
+            {
+                cart.TotalCost += product.Quantity * product.Product.Cost;
+            }
+            await _cartRepository.UpdateCart(cart);
         }
         
     }
