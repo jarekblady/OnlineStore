@@ -20,12 +20,16 @@ namespace OnlineStore.Repository.Repositories.OrderRepository
         public async Task<List<Order>> GetAllOrders()
         {
 
-            return await _context.Orders.Include(u => u.User).Include(p => p.OrderProducts).ThenInclude(p => p.Product).ToListAsync();
+            return await _context.Orders.Include(u => u.User).Include(p => p.OrderProducts).ThenInclude(p => p.Product)
+                .OrderByDescending(u => u.OrderDate.Date)
+                .ToListAsync();
         }
         public async Task<List<Order>> GetAllOrdersForUser(int userId)
         {
 
-            return await _context.Orders.Include(u => u.User).Include(p => p.OrderProducts).ThenInclude(p => p.Product).Where(x => x.UserId == userId).ToListAsync();
+            return await _context.Orders.Include(u => u.User).Include(p => p.OrderProducts).ThenInclude(p => p.Product).Where(u => u.UserId == userId)
+                .OrderByDescending(u => u.OrderDate.Date)
+                .ToListAsync();
         }
 
         public async Task<Order> GetByIdOrder(int id)

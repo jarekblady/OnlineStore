@@ -16,7 +16,8 @@ function AdminPanel() {
     }, [user.token])
 
     function handleOrderStatus(id, orderStatus) {
-        UpdateOrderStatus(id, orderStatus, user.token);
+        UpdateOrderStatus(id, orderStatus, user.token)
+            .then(orders => setOrders(orders));
     }
 
 
@@ -30,20 +31,22 @@ function AdminPanel() {
                     {orders?.map(order => (
                         <Paper sx={{ mb: 2 }}>
                             <Button sx={{ mb: 2 }}
-                                onClick={() => handleOrderStatus(order.id, "confirmed")}
+                                onClick={() => handleOrderStatus(order.id, "accepted")}
                                 variant='contained'
+                                color="success"
                                 size='large'
                                 
                             >
-                                ChangeToConfirmed
+                                Set status to accepted
                             </Button>
                             <Button sx={{ mb: 2 }}
-                                onClick={() => handleOrderStatus(order.id, "canceled")}
+                                onClick={() => handleOrderStatus(order.id, "rejected")}
                                 variant='contained'
+                                color="error"
                                 size='large'
 
                             >
-                                ChangeToCanceled
+                                Set status to rejected
                             </Button>
                         <TableContainer>
                             <Table sx={{ minWidth: 650 }}>

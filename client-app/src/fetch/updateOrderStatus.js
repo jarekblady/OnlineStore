@@ -5,6 +5,8 @@ export default function UpdateOrderStatus(id, orderStatus, token) {
         method: 'PUT',
         headers: {
             'Authorization': 'Bearer ' + token
-        }})
+        }
+    })
+        .then(res => res.json())
         
 }
