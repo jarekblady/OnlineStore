@@ -23,4 +23,4 @@
 
 ## Database (MS SQL Server)
 ### Database Diagram
-![Database Diagram](https://github.com/jarekblady/OnlineStore/blob/master/DatabaseDiagram.PNG)
+![Database Diagram2](https://github.com/jarekblady/OnlineStore/blob/master/DatabaseDiagram2.PNG)
