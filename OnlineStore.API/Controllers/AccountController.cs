@@ -19,7 +19,7 @@ namespace OnlineStore.API.Controllers
         public ActionResult RegisterUser(RegisterUserDto dto)
         {
             _accountService.RegisterUser(dto);
-            return Ok();
+            return Ok("Success");
         }
 
         [HttpPost("login")]

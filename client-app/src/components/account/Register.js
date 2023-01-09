@@ -30,11 +30,21 @@ export default function Login() {
                 password: event.target.password.value,
                 firstName: event.target.firstName.value,
                 lastName: event.target.lastName.value,
+                roleId: 2
             })
         })
             .then(res => res.json())
             .then((result) => {
-                validation(result.errors)
+                if (result.errors !== undefined) {
+                    validation(result.errors)
+                }
+                else {
+                    alert(result)
+                    setValidationFirstName()
+                    setValidationLastName()
+                    setValidationEmail()
+                    setValidationPassword()
+                }
             })
     };
     function validation(e) {
