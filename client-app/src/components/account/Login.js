@@ -40,7 +40,6 @@ export default function Login() {
             })
             .then((result) => {
                 setUser(result)
-                alert("Success")
             })
     };
 
