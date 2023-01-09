@@ -51,7 +51,9 @@ namespace OnlineStore.Repository
             {
                 new Brand() { BrandName = "Samsung"},
                 new Brand() { BrandName = "OnePlus"},
-                new Brand() { BrandName = "Motorola"}
+                new Brand() { BrandName = "Motorola"},
+                new Brand() { BrandName = "Sony"},
+                new Brand() { BrandName = "Lenovo"}
             };
             if (!context.Brands.Any())
             {
@@ -96,6 +98,33 @@ namespace OnlineStore.Repository
                 PictureUrl = "/images/products/MotoG.PNG",
                 BrandId=3,
                 CategoryId=1
+            },
+            new Product
+            {
+                Name="Sony Xperia 1",
+                Description="4K HDR native 120fps video recording on all rear lenses.Form_factor : Bar.Display resolution maximum:1644 x 3840 pixels, True optical zoom 85-125mm/16mm/24mm lenses w/ 20fps HDR AF/AE",
+                Cost=1400,
+                PictureUrl = "/images/products/SonyXperia.PNG",
+                BrandId=4,
+                CategoryId=1
+            },
+            new Product
+            {
+                Name="Lenovo ThinkPad",
+                Description="Series	ThinkPad T15g Gen 2, Screen Size 15.6 Inches, Color   Black, Hard Disk Size  1 TB, CPU Model   Core i9, Ram Memory Installed Size   32 GB, Operating System Windows 10 Pro, Card Description    GeForce RTX 3080, Graphics Coprocessor    NVIDIA GeForce RTX 3080",
+                Cost=4100,
+                PictureUrl = "/images/products/LenovoThinkPad.PNG",
+                BrandId=5,
+                CategoryId=2
+            },
+            new Product
+            {
+                Name="Lenovo Flex 5",
+                Description="Series	2022, Screen Size 14, Color   Storm Grey, Hard Disk Size  512, CPU Model   Ryzen 5 5500U, Ram Memory Installed Size   16 GB, Operating System    Windows 11, Card Description    Integrated, Graphics Coprocessor    AMD Radeon Graphics 5500",
+                Cost=630,
+                PictureUrl = "/images/products/LenovoFlex5.PNG",
+                BrandId=5,
+                CategoryId=2
             }
             };
 

@@ -27,9 +27,8 @@ namespace OnlineStore.Repository
         {
             if (string.IsNullOrEmpty(searchPhrase)) return query;
 
-            var lowerCaseSearchTerm = searchPhrase.Trim().ToLower();
-
-            return query.Where(p => p.Name.ToLower().Contains(lowerCaseSearchTerm));
+            return query.Where(p => p.Name.ToLower().Contains(searchPhrase.Trim().ToLower())
+                                    || p.Description.ToLower().Contains(searchPhrase.Trim().ToLower()));
         }
 
         public static IQueryable<Product> Filter(this IQueryable<Product> query, int brandId, int categoryId)
