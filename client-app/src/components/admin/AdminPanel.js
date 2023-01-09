@@ -20,13 +20,10 @@ function AdminPanel() {
             .then(orders => setOrders(orders));
     }
 
-
-    if (orders === undefined) return <Typography variant='h3'>No orders in store.</Typography>
-
     return (
         <>
             {orders.length === 0 ?
-                <Typography variant='h3'>You don't have orders.</Typography> :
+                <Typography variant='h3'>Admin Panel is available only to users with the admin role.</Typography> :
                 <>
                     {orders?.map(order => (
                         <Paper sx={{ mb: 2 }}>
