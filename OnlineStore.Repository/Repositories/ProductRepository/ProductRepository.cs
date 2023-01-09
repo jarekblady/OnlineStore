@@ -24,13 +24,21 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
             var baseQuery = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
-                .Sort(query.OrderBy)
-                .Search(query.SearchPhrase)
-                .Filter(query.BrandId, query.CategoryId);
+                .Where(x => query.SearchPhrase == null || (x.Name.ToLower().Contains(query.SearchPhrase.ToLower())
+                                                       || x.Description.ToLower().Contains(query.SearchPhrase.ToLower())))
+                .Where(x => query.CategoryId == 0 || x.CategoryId == query.CategoryId)
+                .Where(x => query.BrandId == 0 || x.BrandId == query.BrandId);
 
 
-            
-            var products = await baseQuery
+            var sortQuery = query.OrderBy switch
+            {
+                "cost" => baseQuery.OrderBy(p => p.Cost),
+                "costDesc" => baseQuery.OrderByDescending(p => p.Cost),
+                _ => baseQuery.OrderBy(p => p.Name)
+            };
+            if (string.IsNullOrEmpty(query.OrderBy)) sortQuery = baseQuery.OrderBy(p => p.Name);
+
+            var products = await sortQuery
                 .Skip(query.PageSize * (query.PageNumber - 1))
                 .Take(query.PageSize)
                 .ToListAsync();
