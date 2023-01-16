@@ -1,22 +1,20 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
-
 import { useStoreContext } from "../../context/StoreContext";
-import GetOrders from "../../fetch/getOrders";
-import UpdateOrderStatus from "../../fetch/updateOrderStatus";
+import { getOrders, updateOrderStatus } from "../../services/OrderService";
 
 function AdminPanel() {
     const { user } = useStoreContext();
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        GetOrders(user.token)
+        getOrders(user.token)
             .then(orders => setOrders(orders));
     }, [user.token])
 
     function handleOrderStatus(id, orderStatus) {
-        UpdateOrderStatus(id, orderStatus, user.token)
+        updateOrderStatus(id, orderStatus, user.token)
             .then(orders => setOrders(orders));
     }
 

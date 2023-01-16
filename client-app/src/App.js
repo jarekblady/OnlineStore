@@ -12,7 +12,7 @@ import AdminPanel from "./components/admin/AdminPanel";
 import Navigation from "./Navigation";
 import { useEffect } from "react";
 import { useStoreContext } from "./context/StoreContext";
-import GetCart from "./fetch/getCart";
+import { getCart } from "./services/CartService";
 
 function App() {
     const { setCart } = useStoreContext();
@@ -21,7 +21,7 @@ function App() {
     useEffect(() => {
         const customerId = getCookie('customerId');
         if (customerId) {
-            GetCart()
+            getCart()
                 .then(cart => setCart(cart))
         }
     }, [setCart])

@@ -3,14 +3,14 @@ import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
 
 import { useStoreContext } from "../../context/StoreContext";
-import GetOrdersForUser from "../../fetch/getOrdersForUser";
+import { getOrdersForUser } from "../../services/OrderService";
 
 function Orders() {
     const { user } = useStoreContext();
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        GetOrdersForUser(user.token)
+        getOrdersForUser(user.token)
             .then(orders => setOrders(orders));
     }, [user.token])
 

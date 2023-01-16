@@ -2,9 +2,9 @@ import { useState, useEffect} from "react";
 import { Grid, Paper, TextField, FormControlLabel, Radio, RadioGroup, Pagination } from "@mui/material";
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import ProductList from "./ProductList";
-import GetProducts from "../../fetch/getProducts";
-import GetCategories from "../../fetch/getCategories";
-import GetBrands from "../../fetch/getBrands";
+import { getProducts } from "../../services/ProductService";
+import { getCategories } from "../../services/CategoryService";
+import { getBrands } from "../../services/BrandService";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -19,7 +19,7 @@ function Products() {
     const [totalPages, setTotalPages] = useState(1);
     
     useEffect(() => {
-        GetProducts(orderBy, categoryId, brandId, searchPhrase, pageNumber, pageSize)
+        getProducts(orderBy, categoryId, brandId, searchPhrase, pageNumber, pageSize)
             .then(result => {
                 setProducts(result.items)
                 setTotalPages(result.totalPages)
@@ -28,13 +28,13 @@ function Products() {
     }, [orderBy, searchPhrase, pageNumber, pageSize, categoryId, brandId, totalPages])
 
     useEffect(() => {
-        GetCategories()
+        getCategories()
             .then(categories => setCategories(categories));
 
     }, [])
 
     useEffect(() => {
-        GetBrands()
+        getBrands()
             .then(brands => setBrands(brands));
 
     }, [])

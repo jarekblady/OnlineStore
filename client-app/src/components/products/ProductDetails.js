@@ -2,8 +2,8 @@ import { Button, Divider, Grid, Table, TableBody, TableCell, TableContainer, Tab
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useStoreContext } from "../../context/StoreContext";
-import GetProductDetails from "../../fetch/getProductDetails";
-import AddProductToCart from "../../fetch/addProductToCart";
+import { getProductDetails } from "../../services/ProductService";
+import { addProductToCart } from "../../services/CartService";
 
 function ProductDetails() {
     const { id } = useParams();
@@ -11,7 +11,7 @@ function ProductDetails() {
     const { setCart } = useStoreContext();
     
     useEffect(() => {
-        GetProductDetails(id)
+        getProductDetails(id)
             .then(result => {
                 setProduct(result)
             });
@@ -21,7 +21,7 @@ function ProductDetails() {
 
     function handleAddItem(productId) {
 
-        AddProductToCart(productId)
+        addProductToCart(productId)
             .then(cart => setCart(cart));
     }
 

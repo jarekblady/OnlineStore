@@ -3,9 +3,8 @@ import { Button, IconButton, Grid, Paper, Table, TableBody, TableCell, TableCont
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../context/StoreContext";
-import AddProductToCart from "../../fetch/addProductToCart";
-import RemoveProductFromCart from "../../fetch/removeProductFromCart";
-import AddOrder from "../../fetch/addOrder";
+import { addProductToCart, removeProductFromCart } from "../../services/CartService";
+import { addOrder } from "../../services/OrderService";
 
 
 function Cart() {
@@ -15,17 +14,17 @@ function Cart() {
     if (!productQuantity) return <Typography variant='h3'>Your cart is empty</Typography>
 
     function handleAddItem(productId) {
-        AddProductToCart(productId)
+        addProductToCart(productId)
             .then(cart => setCart(cart));
     }
 
     function handleRemoveItem(productId, quantity) {
-        RemoveProductFromCart(productId, quantity)
+        removeProductFromCart(productId, quantity)
             .then(cart => setCart(cart));
     }
 
     function handleAddOrder() {
-        AddOrder(user.token);
+        addOrder(user.token);
         setCart();
     }
 

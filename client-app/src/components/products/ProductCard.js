@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../context/StoreContext";
-import AddProductToCart from "../../fetch/addProductToCart";
+import { addProductToCart } from "../../services/CartService";
 
 function ProductCard(props) {
     const product = props.product;
@@ -9,7 +9,7 @@ function ProductCard(props) {
 
     function handleAddItem(productId) {
         
-        AddProductToCart(productId)
+        addProductToCart(productId)
             .then(cart => setCart(cart));              
     }
 

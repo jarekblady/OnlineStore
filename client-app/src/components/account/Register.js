@@ -19,7 +19,7 @@ export default function Login() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        fetch('http://localhost:7204/api/account/register', {
+        fetch('/api/account/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
